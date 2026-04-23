@@ -1,0 +1,14 @@
+global using Api.EntityConfigurations;
+global using Api.Services;
+global using Microsoft.EntityFrameworkCore;
+global using Api.DTOs;
+global using Microsoft.AspNetCore.Mvc;
+global using Api.Entities;
+global using Microsoft.EntityFrameworkCore.ChangeTracking;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.Extensions.Primitives;
+global using Api.Middlewares;

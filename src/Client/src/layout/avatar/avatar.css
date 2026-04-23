@@ -1,0 +1,13 @@
+.dropdown-anchor {
+
+    position-anchor: --anchor-auth;
+    right: anchor(right);
+    top: anchor(bottom);
+    position: fixed;
+    margin-top: 0.25rem;
+
+}
+
+.starter-anchor {
+    anchor-name: --anchor-auth;
+}

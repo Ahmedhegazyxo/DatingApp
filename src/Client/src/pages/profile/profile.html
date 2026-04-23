@@ -1,0 +1,46 @@
+<div class="card bg-base-100 shadow-xl max-w-xl mx-auto">
+  <div class="card-body">
+    <h2 class="card-title text-lg">User Profile</h2>
+
+    <div class="grid grid-cols-1 gap-3">
+      <div class="flex justify-between">
+        <span class="font-semibold">First Name</span>
+        <span>{{ this.profileService.profileModel()?.firstName}}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold">Last Name</span>
+        <span>{{ this.profileService.profileModel()?.lastName }}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold">Username</span>
+        <span>{{ this.profileService.profileModel()?.username }}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold">Email</span>
+        <span>{{ this.profileService.profileModel()?.email }}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold">Phone Number</span>
+        <span>{{ this.profileService.profileModel()?.phoneNumber }}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold">Birthdate</span>
+        <span>{{ this.profileService.profileModel()?.birthdate?.toString()}}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="font-semibold">Gender</span>
+        <span>{{ this.profileService.profileModel()?.gender }}</span>
+      </div>
+    </div>
+
+    <div class="card-actions justify-end mt-4">
+      <button class="btn btn-primary btn-sm">Edit Profile</button>
+    </div>
+  </div>
+</div>

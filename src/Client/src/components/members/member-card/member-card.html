@@ -1,0 +1,22 @@
+<button >
+    <div class="{{getCardClass()}}">
+        <div class="card-title p-4 flex justify-between">
+            <div class="text-gray-500">
+                {{memberModel.firstName}} {{memberModel.lastName}}
+            </div>
+            <div class="text-gray flex">
+                {{memberModel.age}}
+            </div>
+            @if(!memberModel.isLikedBefore)
+            {
+            <button class="rounded-4xl btn btn-success text-white"
+                (click)="navigateToUserProfile()">
+                <b>+</b>
+            </button>
+            }
+        </div>
+        <div class="card-body">
+            <img src="{{getImageSource()}}" class="max-h-50 bg-white" />
+        </div>
+    </div>
+</button>

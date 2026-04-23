@@ -1,0 +1,37 @@
+<div class="fixed pt-5 px-5 z-100 w-full bg-gray-200 opacity-100">
+    <div class="navbar 
+    rounded-r-full
+     rounded-l-full
+      min-h-15 bg-linear-to-r
+       from-blue-400
+        to-red-300
+           text-white
+           opacity-100
+            text-2xl
+             font-extralight
+              justify-between 
+              sm:px-20 ">
+        <diV>
+            <img src="/assets/logo/logo.png" class="max-h-15">
+        </diV>
+        <div class="sm:flex gap-4 hidden">
+            @if(userModel() != null){
+                
+            <a class="p-3 link no-underline" routerLink="/" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Home</a>
+            <a class="p-3 link no-underline" routerLink="/members" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Members</a>
+            }
+            @else
+                {
+               <a class="p-3 link no-underline" routerLink="/login" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Login</a>
+            <a class="p-3 link no-underline" routerLink="/register" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Register</a>
+            }
+        </div>
+        @if(userModel() != null)
+        {
+        <div class="flex items-center gap-4">
+            <app-avatar [userAbbreviation]="usernameAbbreviation()" [username]="username()"></app-avatar>
+            <button (click)="logout()" class="btn btn-error text-white">Logout</button>
+        </div>
+        }
+    </div>
+</div>
