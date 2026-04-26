@@ -23,12 +23,6 @@ public class ExceptionHandlerMiddleware
         try
         {
             await _next(context);
-
-            if (!context.Response.HasStarted &&
-                context.Response.StatusCode >= 400)
-            {
-                await HandleHttpStatusCodeAsync(context);
-            }
         }
         catch (Exception ex)
         {
@@ -62,27 +56,14 @@ public class ExceptionHandlerMiddleware
                  "An unexpected error occurred")
         };
 
-        await WriteErrorResponse(context, statusCode, title, detail);
-    }
-    private static async Task HandleHttpStatusCodeAsync(HttpContext context)
-    {
-        var statusCode = (HttpStatusCode)context.Response.StatusCode;
-
-        var title = statusCode switch
+        try
         {
-            HttpStatusCode.NotFound => "Resource not found",
-            HttpStatusCode.Forbidden => "Access denied",
-            HttpStatusCode.Unauthorized => "Unauthorized",
-            HttpStatusCode.MethodNotAllowed => "Method not allowed",
-            _ => "Request failed"
-        };
-
-        await WriteErrorResponse(
-            context,
-            statusCode,
-            title,
-            $"HTTP {(int)statusCode}"
-        );
+            await WriteErrorResponse(context, statusCode, title, detail);
+        }
+        catch (Exception writeEx)
+        {
+            _logger.LogError(writeEx, "Failed to write error response");
+        }
     }
     private static async Task WriteErrorResponse(
         HttpContext context,

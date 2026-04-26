@@ -8,7 +8,6 @@ import { ApiErrorView } from "../models/views/ApiErrorView";
 export function authenticationIntercept(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
 
     let authStateService = inject(AuthenticationStateService);
-    console.log('authentication status' , authStateService.userModel);
     if (authStateService.userModel == null || req.url.includes('auth')) {
         return next(req);
     }
@@ -31,8 +30,7 @@ export function loadingIntercept(req: HttpRequest<any>, next: HttpHandlerFn): Ob
 export function errorIntercept(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
     let errorHandlerService = inject(ErrorHandlerService);
     return next(req).pipe(catchError((error: HttpErrorResponse) => {
-        let apiError = error.error as ApiErrorView;
-        errorHandlerService.showErrorToaster(apiError);
+        errorHandlerService.showErrorToaster(error);
         return throwError(error);
     }))
 }

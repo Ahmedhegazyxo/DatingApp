@@ -31,7 +31,6 @@ public class BaseRepository<TEntity, TId> : IBaseRepository<TEntity, TId> where 
     {
         return await _context.Set<TEntity>().AsNoTracking().AnyAsync(predicate,cancellationToken);
     }
-
     public async Task<List<TEntity>> Read(PaginationFilter? paginationFilter,
      CancellationToken cancellationToken,
       Expression<Func<TEntity, bool>>? predicate = null)

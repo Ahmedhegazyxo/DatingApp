@@ -20,18 +20,26 @@ public class UserService : IUserService
 
     public async Task<UserView> Login(string userName, string password, CancellationToken cancellationToken)
     {
-        User user = await _context.Set<User>().Include(e=>e.Profile).FirstAsync(e => e.Username == userName);
+        User? user = await _context.Set<User>().FirstOrDefaultAsync(e => e.Username == userName);
+        if (user == null)
+            throw new InvalidCredentialException("User not found");
+
         bool isCredentialsCorrect = PasswordHasher.VerifyPassword(password, user.HashPassword, user.HashSalt);
         if (isCredentialsCorrect == false)
-            throw new InvalidCredentialException("Incorrect username or password");
+            throw new InvalidCredentialException("Incorrect password");
         else
+        {
+
+            TokenDTO tokenDTO = await _tokenService.IssueToken(user);
             return new UserView
             {
-                Token = _tokenService.IssueToken(user),
                 FirstName = user.Profile!.FirstName,
                 LastName = user.Profile!.LastName,
-                Username = user.Username
+                Username = user.Username,
+                ExpiresAt = tokenDTO.ExpiresAt,
+                Token = tokenDTO.Token
             };
+        }
     }
 
     public async Task<UserView> Register(RegisterDTO registerDto, CancellationToken cancellationToken)
@@ -48,12 +56,14 @@ public class UserService : IUserService
              registerDto.Gender);
         EntityEntry<User> createdUser = await _context.Set<User>().AddAsync(user, cancellationToken);
         await _context.SaveChangesAsync();
+        TokenDTO token = await _tokenService.IssueToken(createdUser.Entity);
         return new UserView
         {
-           Token = _tokenService.IssueToken(createdUser.Entity),
-           Username = createdUser.Entity.Username,  
-           FirstName = createdUser.Entity.Profile!.FirstName,
-           LastName = createdUser.Entity.Profile!.LastName
+            Username = createdUser.Entity.Username,
+            FirstName = createdUser.Entity.Profile!.FirstName,
+            LastName = createdUser.Entity.Profile!.LastName,
+            Token = token.Token,
+            ExpiresAt = token.ExpiresAt
         };
     }
 }

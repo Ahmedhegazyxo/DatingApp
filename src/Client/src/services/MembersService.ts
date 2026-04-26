@@ -23,10 +23,12 @@ export class MembersService {
     public LikeMember(id: string) {
         this.httpClient.post<MemberMatchView>(this.URI + this.LikeUri + id, id).subscribe({
             next: (e) => {
-                if (e.isMatched)
-                    window.alert('Congrats! you have a match');
+                if (e.isMatched){
+                    
+                    this.loadMembers();
+                }
                 else{
-                    window.alert(e.userId + ' was added successfully');
+                    this.loadMembers();
                 }
             }
         })

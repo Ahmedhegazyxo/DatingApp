@@ -16,7 +16,7 @@ public static class PasswordHasher
         byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
             password,
             salt,
-            Iterations,
+            100,
             HashAlgorithmName.SHA256,
             KeySize);
 

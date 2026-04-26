@@ -4,4 +4,6 @@ export interface UserModel
     firstName : string;
     lastName : string;
     token : string;
+    expiresAt : string;
+    
 }

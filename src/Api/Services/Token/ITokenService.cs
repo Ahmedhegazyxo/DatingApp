@@ -1,6 +1,6 @@
 namespace Api.Services;
 public interface ITokenService
 {
-    string IssueToken(User user);
+    Task<TokenDTO> IssueToken(User user);
     bool ValidateToken(string jwtToken);
 }

@@ -1,5 +1,5 @@
 export interface ApiErrorView {
     status : number;
-    error : string;
+    title : string;
     detail : string;
 }

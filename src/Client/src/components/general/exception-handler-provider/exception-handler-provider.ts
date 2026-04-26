@@ -16,11 +16,24 @@ export class ExceptionHandlerProvider implements AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.errorHandlerService.errorHandlerEventTarget.addEventListener('errorEvent', (e: Event) => {
-      let errorEvent = e as CustomEvent<ApiErrorView>;
-      this.errorTitle.set(errorEvent.detail.error);
-      this.errorMessage.set(errorEvent.detail.error);
-      this.errorStatusCode.set(errorEvent.detail.status);
-      this.errorModal.nativeElement.showModal();
+      let errorEvent = e as CustomEvent<HttpErrorResponse>;
+      let apiError = errorEvent.detail.error as ApiErrorView;
+      try
+      {
+
+        
+        this.errorTitle.set(apiError.status.toString());
+        this.errorMessage.set(apiError.title);
+        this.errorStatusCode.set(apiError.status);
+        this.errorModal.nativeElement.showModal();
+      }
+      catch
+      {
+        this.errorTitle.set('Internal Server Error');
+        this.errorMessage.set('An unknown error has occured. Please try again later or contact support if the problem persists.');
+        this.errorStatusCode.set(500);
+        this.errorModal.nativeElement.showModal();
+      }
     });
     this.errorModal.nativeElement.addEventListener('cancel', (e: Event) =>
       e.preventDefault());

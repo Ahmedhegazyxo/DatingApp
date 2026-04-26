@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { UserModel } from '../../models/views/UserModel';
 import { MembersList } from '../../components/members/members-list/members-list';
 import { AuthenticationStateService } from '../../services/AuthneticationStateService';
+import { ToasterProvider } from "../../components/general/toaster-provider/toaster-provider";
 
 @Component({
   selector: 'app-home',
-  imports: [MembersList],
+  imports: [MembersList, ToasterProvider],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

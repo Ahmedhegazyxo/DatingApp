@@ -8,10 +8,10 @@ import { ApiErrorView } from "../models/views/ApiErrorView";
 export class ErrorHandlerService {
 
     public errorHandlerEventTarget: EventTarget = new EventTarget();
-    public showErrorToaster(error: ApiErrorView) {
-        let errorEvent = new CustomEvent<ApiErrorView>('errorEvent', {
+    public showErrorToaster(error: HttpErrorResponse) {
+        let errorEvent = new CustomEvent<HttpErrorResponse>('errorEvent', {
             detail: error
-        })
+        });
         this.errorHandlerEventTarget.dispatchEvent(errorEvent);
     }
 }

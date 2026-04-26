@@ -1,4 +1,5 @@
 using Api.Enums;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Api.Entities;
 public class User : BaseEntity<Guid>
 {

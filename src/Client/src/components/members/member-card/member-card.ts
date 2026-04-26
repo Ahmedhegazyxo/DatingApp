@@ -28,7 +28,7 @@ export class MemberCard {
       case Gender.other: return "assets/logo/unknown-male.png";
     }
   }
-  protected navigateToUserProfile() {
+  protected likeUser() {
     this.onMemberCardClicked.emit(this.memberModel);
   }
 }

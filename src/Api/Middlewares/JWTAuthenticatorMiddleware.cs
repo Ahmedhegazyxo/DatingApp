@@ -18,7 +18,6 @@ public class JWTAuthenticatorMiddleware
             if (endpointInfo?.Metadata.GetMetadata<IAllowAnonymous>() != null)
             {
                 await _next(context);
-                return;
             }
             else
             {

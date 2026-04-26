@@ -15,7 +15,6 @@ export class LoadingStateProvider implements AfterViewInit {
   constructor(private loadingIndicatorService: LoadingIndicatorService) {
   }
   ngAfterViewInit(): void {
-    console.log('the view is okay and totally fine', this.loadingModal);
     this.loadingIndicatorService.loadingIndicatorEventTarget.addEventListener('loadingIndicator', (e: Event) => {
       let loadingEvent = e as CustomEvent<boolean>;
       if (loadingEvent.detail == true) {
