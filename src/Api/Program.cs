@@ -9,7 +9,7 @@ using Hangfire;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddCors(op => op.AddPolicy("DatingAppClient", url => url.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+builder.Services.AddCors(op => op.AddPolicy("DatingAppClient", url => url.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200")));
 builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();
 builder.Services.AddDbContext<ApplicationDbContext>(op => op.UseSqlite("Data Source=datingApp.db").UseLazyLoadingProxies());
@@ -35,8 +35,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 }
-var client = new BackgroundJobClient();
-
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseCors("DatingAppClient");
 app.UseMiddleware<JWTAuthenticatorMiddleware>();

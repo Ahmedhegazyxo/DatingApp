@@ -365,3 +365,5 @@ FodyWeavers.xsd
 # Build directories
 src/api/bin/
 src/api/obj/
+src/Api/datingApp.db-wal
+src/Api/datingApp.db-wal
