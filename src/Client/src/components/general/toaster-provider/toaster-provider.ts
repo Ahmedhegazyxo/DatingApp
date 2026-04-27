@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ToastView } from '../../../models/views/ToastView';
 import { Severity } from '../../../models/enums/severity';
+import { ToasterService } from '../../../services/toaster-service';
 
 @Component({
   selector: 'app-toaster-provider',
@@ -10,25 +11,17 @@ import { Severity } from '../../../models/enums/severity';
 })
 export class ToasterProvider 
 {
-    public toastList : ToastView[] = [];
-    public addToast(){
-        const toast = new ToastView();
-        toast.title = 'Toast Title';
-        toast.callback = ()=> window.alert('aywaaa');
-        toast.description = 'Toast Description';
-        toast.severity = Severity.Info;
-        this.toastList.push(toast);
-    }
+    constructor(protected toasterService : ToasterService){} 
     public toastClass(sev : Severity) : string {
         switch (sev) {    
             case Severity.Info:
-                return 'alert alert-info text-white shadow-lg';
+                return 'alert alert-info text-white shadow-lg cursor-pointer';
             case Severity.Success: 
-                return 'alert alert-success';
+                return 'alert alert-success text-white shadow-lg cursor-pointer';
             case Severity.Warning:
-                return 'alert alert-warning';
+                return 'alert alert-warning text-white shadow-lg cursor-pointer';
             case Severity.Error:
-                return 'alert alert-error';
+                return 'alert alert-error text-white shadow-lg cursor-pointer';
         }
     };
     public toastCallback(toaster : ToastView){

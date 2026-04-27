@@ -2,6 +2,9 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/htt
 import { MemberModel } from "../models/views/MemberModel";
 import { Injectable, signal } from "@angular/core";
 import { MemberMatchView } from "../models/views/MemberMatchView";
+import { ToasterService } from "./toaster-service";
+import { ToastView } from "../models/views/ToastView";
+import { Severity } from "../models/enums/severity";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +14,7 @@ export class MembersService {
     public readonly _members = this.members.asReadonly();
     private URI: string = 'http://localhost:5138/api/members';
     private LikeUri: string = '/likeOrMatch/';
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private toasterService: ToasterService) { }
     public loadMembers(): void {
         this.httpClient.get<Array<MemberModel>>(this.URI, { observe: 'response' }).subscribe({
             next: (res: HttpResponse<Array<MemberModel>>) => this.onAcceptedCallback(res)
@@ -24,7 +27,11 @@ export class MembersService {
         this.httpClient.post<MemberMatchView>(this.URI + this.LikeUri + id, id).subscribe({
             next: (e) => {
                 if (e.isMatched){
-                    
+                    let toast = new ToastView();
+                    toast.title = 'Congrats!';
+                    toast.description = 'You have a new match!';
+                    toast.severity = Severity.Success;
+                    this.toasterService.addToast(toast);
                     this.loadMembers();
                 }
                 else{

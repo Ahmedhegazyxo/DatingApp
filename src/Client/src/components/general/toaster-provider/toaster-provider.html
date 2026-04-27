@@ -1,11 +1,19 @@
+<div class="toast toast-right text-white">
+  @for (toastItem of toasterService.toastList(); track $index) {
 
-<div class="toast toast-right text-white cursor-pointer" >
-@for (toastItem of toastList; track $index)
-{
-    <button class="{{toastClass(toastItem.severity)}}" (click)="toastCallback(toastItem)">
-        <span>{{toastItem.title}}</span>
-        <span>{{toastItem.description}}</span>
-    </button>
-    }
+    <div class="relative">
+      <button
+        class="w-full {{ toastClass(toastItem.severity) }}"
+        (click)="toastCallback(toastItem)"
+      >
+        <div class="text-left">
+          <div><b>{{ toastItem.title }}</b></div>
+          <div>{{ toastItem.description }}</div>
+        </div>
+      </button>
+      <a class="btn btn-circle btn-ghost btn-xs absolute top-1 right-1 text-white"
+        (click)="toasterService.removeToast(toastItem); $event.stopPropagation()"
+        aria-label="Close">✕</a>
+    </div>
+  }
 </div>
-<button class="btn btn-primary" (click)="addToast()">Add Toast</button>
