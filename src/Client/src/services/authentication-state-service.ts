@@ -1,8 +1,9 @@
 import { Injectable, signal } from "@angular/core";
 import { UserModel } from "../models/views/UserModel";
-import { JsonPipe } from "@angular/common";
 import { Router } from "@angular/router";
-import { timer } from "rxjs";
+import { Severity } from "../models/enums/severity";
+import { ToastView } from "../models/views/ToastView";
+import { ToasterService } from "./toaster-service";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthenticationStateService {
     public userModel = signal<UserModel | null>(null);
     public AuhtenticationEventAppTarget: EventTarget = new EventTarget();
     protected expiresInMs: number | null = null;
-    constructor(protected router: Router) {
+    constructor(protected router: Router, protected toasterService: ToasterService) {
         this.userModel.set(this.getUserModelInfo());
         if (this.userModel() == null) {
             this.expiresInMs = 0;
@@ -34,6 +35,8 @@ export class AuthenticationStateService {
         });
         this.AuhtenticationEventAppTarget.dispatchEvent(loginEvent)
         this.userModel.set(userModel);
+        let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 5000, (e)=> this.toasterService.addToast(toast));
+        this.toasterService.addToast(toast);
         window.localStorage.setItem('userModel', JSON.stringify(userModel))
         this.expiresInMs = new Date(userModel.expiresAt).getTime() - new Date().getTime();
         setTimeout(() => {
@@ -45,6 +48,8 @@ export class AuthenticationStateService {
         this.AuhtenticationEventAppTarget.dispatchEvent(logoutEvent);
         this.userModel.set(null);
         window.localStorage.removeItem('userModel');
+        let toast = new ToastView('Logout', 'Logged out successfully', Severity.Success, 5000);
+        this.toasterService.addToast(toast);
         this.router.navigate(['/login'])
     }
     public getUserModelInfo(): UserModel | null {

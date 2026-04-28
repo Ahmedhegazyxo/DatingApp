@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHandlerFn, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { catchError, finalize, Observable, throwError } from "rxjs";
-import { AuthenticationStateService } from "./AuthneticationStateService";
-import { LoadingIndicatorService } from "./LoadingIndicatorService";
-import { ErrorHandlerService } from "./ErrorHandlerService";
+import { AuthenticationStateService } from "./authentication-state-service";
+import { LoadingIndicatorService } from "./loading-indicator-service";
+import { ErrorHandlerService } from "./error-handler-service";
 import { ApiErrorView } from "../models/views/ApiErrorView";
 export function authenticationIntercept(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpResponse, HttpStatusCode } from "@an
 import { RegisterDto } from "../models/dtos/RegisterDto";
 import { Injectable } from "@angular/core";
 import { UserModel } from "../models/views/UserModel";
-import { AuthenticationStateService } from "./AuthneticationStateService";
+import { AuthenticationStateService } from "./authentication-state-service";
 import { Router } from "@angular/router";
 
 @Injectable(

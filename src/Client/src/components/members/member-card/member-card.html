@@ -1,22 +1,32 @@
-<button >
-    <div class="{{getCardClass()}}">
-        <div class="card-title p-4 flex justify-between">
-            <div class="text-gray-500">
-                {{memberModel.firstName}} {{memberModel.lastName}}
-            </div>
-            <div class="text-gray flex">
-                {{memberModel.age}}
-            </div>
+<div class="{{getCardClass()}}">
+    <div class="card-title flex justify-between min-h-10">
+        <div class="text-gray-500">
+            {{memberModel.firstName}} {{memberModel.lastName}}
+        </div>
+        <div>
             @if(!memberModel.isLikedBefore)
             {
-            <button class="rounded-4xl btn btn-success text-white"
-                (click)="likeUser()">
-                <b>+</b>
+            <button class="rounded-4xl btn btn-circle btn-success text-white" (click)="likeUser()">
+                <i class="fa fa-heart"></i>
             </button>
             }
         </div>
-        <div class="card-body">
-            <img src="{{getImageSource()}}" class="max-h-50 bg-white" />
-        </div>
     </div>
-</button>
+    <div>
+        @if(memberModel.gender == 1){
+
+        <div class="badge bg-blue-300 badge-sm">M</div>
+        }
+        @else if(memberModel.gender == 2){
+        <div class="badge bg-pink-300 badge-sm">F</div>
+        }
+        @else {
+        <div class="badge bg-gray-300 badge-sm">O</div>
+        }
+        <div class="badge bg-amber-300 badge-sm">{{memberModel.age}}</div>
+
+    </div>
+    <div class="card-body opacity-40">
+        <img src="{{getImageSource()}}" class="max-h-50 max-w-50 bg-white" />
+    </div>
+</div>

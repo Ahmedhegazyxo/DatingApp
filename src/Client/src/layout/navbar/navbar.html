@@ -1,4 +1,4 @@
-<div class="fixed pt-5 px-5 z-100 w-full bg-gray-200 opacity-100">
+<div class="fixed pt-5 px-5 z-100 w-full bg-gray-100 opacity-100">
     <div class="navbar 
     rounded-r-full
      rounded-l-full
@@ -11,19 +11,29 @@
              font-extralight
               justify-between 
               sm:px-20 ">
-        <diV>
+        <a href="/">
             <img src="/assets/logo/logo.png" class="max-h-15">
-        </diV>
+        </a>
         <div class="sm:flex gap-4 hidden">
             @if(userModel() != null){
-                
-            <a class="p-3 link no-underline" routerLink="/" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Home</a>
-            <a class="p-3 link no-underline" routerLink="/members" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Members</a>
+
+            <a class="p-3 link no-underline" routerLink="/"
+                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Home</a>
+            <a class="p-3 link no-underline" routerLink="/members"
+                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Members</a> <a class="p-3 link no-underline" routerLink="/matches"
+                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Matches</a>
             }
             @else
-                {
-               <a class="p-3 link no-underline" routerLink="/login" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Login</a>
-            <a class="p-3 link no-underline" routerLink="/register" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700" [routerLinkActiveOptions]="{exact : true}">Register</a>
+            {
+            <a class="p-3 link no-underline" routerLink="/login"
+                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Login</a>
+            <a class="p-3 link no-underline" routerLink="/register"
+                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Register</a>
             }
         </div>
         @if(userModel() != null)

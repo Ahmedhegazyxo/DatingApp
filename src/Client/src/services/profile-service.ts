@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { UserModel } from '../models/views/UserModel';
 import { HttpClient } from '@angular/common/http';
 import { ProfileModel } from '../models/views/ProfileModel';
 

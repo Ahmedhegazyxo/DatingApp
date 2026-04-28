@@ -5,7 +5,8 @@ export class ProfileModel {
     public lastName : string = '';
     public username : string = '';
     public phoneNumber : string = '';
-    public birthdate : Date = new Date();
+    public birthdate : string = '';
+    public age : number = 0;
     public gender : Gender = Gender.other;
     public email : string = '';
 }

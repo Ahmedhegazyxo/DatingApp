@@ -15,7 +15,12 @@ public class MembersController : ControllerBase
     [HttpGet]
     public async Task<List<MemberView>> GetMembers([FromQuery] PaginationFilter? paginationFilter)
     {
-        return await _membersService.GetMembersAsync();
+        return await _membersService.GetMembersAsync(paginationFilter);
+    }
+    [HttpGet("matches")]
+    public async Task<List<MemberView>> GetMatches([FromQuery] PaginationFilter? paginationFilter)
+    {
+        return await _membersService.GetMatchesAsync(paginationFilter);
     }
     [HttpPost("likeOrMatch/{id}")]
     public async Task<IActionResult> LikeOrMatch([FromRoute] Guid id, CancellationToken cancellationToken)

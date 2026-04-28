@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, input } from '@angular/core';
 import { MemberCard } from '../member-card/member-card';
-import { MembersService } from '../../../services/MembersService';
+import { MembersService } from '../../../services/members-service';
 import { MemberModel } from '../../../models/views/MemberModel';
 import { UserModel } from '../../../models/views/UserModel';
 

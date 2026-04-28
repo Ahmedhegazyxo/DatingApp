@@ -7,7 +7,6 @@ public static class PasswordHasher
 {
     private const int SaltSize = 16;
     private const int KeySize = 32;
-    private const int Iterations = 100_000;
 
     public static (string Hash, string Salt) HashPassword(string password)
     {
@@ -16,7 +15,7 @@ public static class PasswordHasher
         byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
             password,
             salt,
-            100,
+            iterations: 100,
             HashAlgorithmName.SHA256,
             KeySize);
 
@@ -37,7 +36,7 @@ public static class PasswordHasher
         byte[] actualHash = Rfc2898DeriveBytes.Pbkdf2(
             password,
             salt,
-            Iterations,
+            100,
             HashAlgorithmName.SHA256,
             expectedHash.Length);
 

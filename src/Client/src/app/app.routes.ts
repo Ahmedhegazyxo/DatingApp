@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { RegisterationForm } from '../public-components/registeration-form/registeration-form';
-import { Home } from '../pages/home/home';
-import { Profile } from '../pages/profile/profile';
-import { MembersPage } from '../pages/members-page/members-page';
+import { Home } from '../components/pages/home/home';
+import { Profile } from '../components/pages/profile/profile';
+import { MembersPage } from '../components/pages/members-page/members-page';
 import { authGuard } from '../guards/auth-guard';
-import { LoginPage } from '../pages/login-page/login-page';
-import { RegisterPage } from '../pages/register-page/register-page';
+import { LoginPage } from '../components/pages/login-page/login-page';
+import { RegisterPage } from '../components/pages/register-page/register-page';
+import { MatchesPage } from '../components/pages/matches-page/matches-page';
 
 export const routes: Routes = [
     {
@@ -30,6 +30,11 @@ export const routes: Routes = [
     {
         path : 'members',
         component : MembersPage,
+        canActivate : [authGuard]
+    } ,
+    {
+        path : 'matches',
+        component : MatchesPage,
         canActivate : [authGuard]
     }
 ];

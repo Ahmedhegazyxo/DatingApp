@@ -15,16 +15,16 @@ export class ToasterProvider
     public toastClass(sev : Severity) : string {
         switch (sev) {    
             case Severity.Info:
-                return 'alert alert-info text-white shadow-lg cursor-pointer';
+                return 'alert alert-info text-white shadow-lg cursor-pointer border-white border-2 p-3';
             case Severity.Success: 
-                return 'alert alert-success text-white shadow-lg cursor-pointer';
+                return 'alert alert-success text-white shadow-lg cursor-pointer border-white border-2 p-3';
             case Severity.Warning:
-                return 'alert alert-warning text-white shadow-lg cursor-pointer';
+                return 'alert alert-warning text-white shadow-lg cursor-pointer border-white border-2 p-3';
             case Severity.Error:
-                return 'alert alert-error text-white shadow-lg cursor-pointer';
+                return 'alert alert-error text-white shadow-lg cursor-pointer border-white border-2 p-3';
         }
     };
     public toastCallback(toaster : ToastView){
-        toaster.callback();
+        toaster.callback(toaster);
     }
 }

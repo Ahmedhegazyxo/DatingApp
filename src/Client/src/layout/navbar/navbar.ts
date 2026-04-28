@@ -1,7 +1,7 @@
 import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { Avatar } from '../avatar/avatar';
 import { UserModel } from '../../models/views/UserModel';
-import { LoginService } from '../../services/LoginService';
+import { LoginService } from '../../services/login-service';
 import { RouterLinkActive, RouterLinkWithHref } from "@angular/router";
 
 @Component({

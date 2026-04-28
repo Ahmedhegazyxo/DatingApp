@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { loginDto } from '../../models/dtos/loginDto';
-import { LoginService } from '../../services/LoginService';
 import { Router } from '@angular/router';
+import { LoginService } from '../../../services/login-service';
+import { loginDto } from '../../../models/dtos/loginDto';
 
 @Component({
   selector: 'app-login-form',

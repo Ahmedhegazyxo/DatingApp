@@ -2,8 +2,11 @@ import { HttpClient, HttpErrorResponse, HttpResponse, HttpStatusCode } from "@an
 import { loginDto } from "../models/dtos/loginDto";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthenticationStateService } from "./AuthneticationStateService";
+import { AuthenticationStateService } from "./authentication-state-service";
 import { UserModel } from "../models/views/UserModel";
+import { ToasterService } from "./toaster-service";
+import { ToastView } from "../models/views/ToastView";
+import { Severity } from "../models/enums/severity";
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +16,8 @@ export class LoginService {
     private readonly loginUri = '/login' 
     constructor(private httpClient: HttpClient,
         private router: Router,
-        private authenticationStateService: AuthenticationStateService) { }
+        private authenticationStateService: AuthenticationStateService,
+    private toasterService: ToasterService) { }
         public Logout() {
             window.localStorage.removeItem('userModel');
             this.authenticationStateService.logoutTriggered();
@@ -39,5 +43,7 @@ export class LoginService {
         });
         this.authenticationStateService.loginTriggered(response.body as UserModel);
         this.router.navigate(['/']);
+        let toast = new ToastView();
+        
     }
 }

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { LoadingIndicatorService } from '../../../services/LoadingIndicatorService';
+import { LoadingIndicatorService } from '../../../services/loading-indicator-service';
 
 @Component({
   selector: 'app-loading-state-provider',

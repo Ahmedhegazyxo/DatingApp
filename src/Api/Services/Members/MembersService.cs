@@ -13,6 +13,25 @@ public class MembersService : IMembersService
         _userClaimsService = userClaimsService;
         _profileRepository = profileRepository;
     }
+
+    public async Task<List<MemberView>> GetMatchesAsync(PaginationFilter? paginationFilter = null, CancellationToken cancellationToken = default)
+    {
+       
+       Guid CurrentUserId = new Guid($"{_userClaimsService.ClaimsPrincipal!.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
+        return await _profileRepository.ReadAsResultAsNoTracking(paginationFilter,
+         e => new MemberView
+         {
+             Birthdate = e.User!.Birthdate,
+             Id = e.Id,
+             Username = e.User.Username,
+             FirstName = e.FirstName,
+             LastName = e.LastName,
+             Gender = e.Gender,
+             IsLikedBefore = true
+         }, cancellationToken, e => e.MatchesSent.Any(e => e.CreatorProfileId == CurrentUserId) || e.MatchesReceived.Any(e => e.ReceptorProfileId == CurrentUserId)
+        );
+    }
+
     public async Task<List<MemberView>> GetMembersAsync(PaginationFilter? paginationFilter = null, CancellationToken cancellationToken = default!)
     {
         Guid CurrentUserId = new Guid($"{_userClaimsService.ClaimsPrincipal!.FindFirst(ClaimTypes.NameIdentifier)!.Value}");

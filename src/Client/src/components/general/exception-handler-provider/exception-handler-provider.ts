@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, input, signal, ViewChild } from '@angular/core';
-import { ErrorHandlerService } from '../../../services/ErrorHandlerService';
+import { ErrorHandlerService } from '../../../services/error-handler-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiErrorView } from '../../../models/views/ApiErrorView';

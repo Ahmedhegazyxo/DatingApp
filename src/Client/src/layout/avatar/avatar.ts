@@ -1,6 +1,4 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
-import { UserModel } from '../../models/views/UserModel';
-import { AuthenticationStateService } from '../../services/AuthneticationStateService';
 import { Router } from '@angular/router';
 
 @Component({

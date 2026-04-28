@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MembersList } from "../../components/members/members-list/members-list";
+import { MembersList } from '../../members/members-list/members-list';
 
 @Component({
   selector: 'app-members-page',
