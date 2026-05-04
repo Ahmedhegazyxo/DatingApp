@@ -1,6 +1,7 @@
 using Api.Enums;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Api.Entities;
+
 public class User : BaseEntity<Guid>
 {
     public string Username { get; private set; } = string.Empty;
@@ -31,5 +32,19 @@ public class User : BaseEntity<Guid>
             PhoneNumber = phoneNumber,
             Profile = Profile.Create(firstName, lastName, gender)
         };
+    }
+    public void Update(string? username = null, DateTime? birthdate = null)
+    {
+        if (username == null && birthdate == null) return;
+        else if (username == null)
+        {
+            Birthdate = birthdate!.Value;
+            return;
+        }
+        else if (birthdate == null)
+        {
+            Username = username;
+            return;
+        }
     }
 }

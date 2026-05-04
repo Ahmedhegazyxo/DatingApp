@@ -1,10 +1,10 @@
-<div class="fixed pt-5 px-5 z-100 w-full bg-gray-100 opacity-100">
+<div class="fixed pt-5 px-5 z-100 w-full  opacity-100">
     <div class="navbar 
     rounded-r-full
      rounded-l-full
       min-h-15 bg-linear-to-r
-       from-blue-400
-        to-red-300
+       from-primary
+        to-secondary
            text-white
            opacity-100
             text-2xl
@@ -22,8 +22,8 @@
                 [routerLinkActiveOptions]="{exact : true}">Home</a>
             <a class="p-3 link no-underline" routerLink="/members"
                 routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
-                [routerLinkActiveOptions]="{exact : true}">Members</a> <a class="p-3 link no-underline" routerLink="/matches"
-                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Members</a> <a class="p-3 link no-underline"
+                routerLink="/matches" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
                 [routerLinkActiveOptions]="{exact : true}">Matches</a>
             }
             @else
@@ -39,8 +39,19 @@
         @if(userModel() != null)
         {
         <div class="flex items-center gap-4">
+            <button class="cursor-pointer avatar  rounded-full ring-2 p-3 bg-base-300" (click)="this.accessabilityService.toggleTheme()">
+                @if(this.accessabilityService.isDarkMode()){
+                    <i class="text-warning fa-regular fa-sun"></i>
+                }
+                @else {
+                    <i class="text-primary fa-regular fa-moon"></i>
+                }
+            </button>
             <app-avatar [userAbbreviation]="usernameAbbreviation()" [username]="username()"></app-avatar>
-            <button (click)="logout()" class="btn btn-error text-white">Logout</button>
+            <button (click)="logout()" class="btn btn-error rounded-full text-white">
+                <span class="md:block hidden">Logout</span>
+                <span><i class="fa-solid fa-right-from-bracket"></i></span>
+            </button>
         </div>
         }
     </div>

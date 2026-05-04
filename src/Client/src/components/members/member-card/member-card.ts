@@ -18,9 +18,9 @@ export class MemberCard {
   
   protected getCardClass(): string {
     switch (this.memberModel.gender) {
-      case Gender.male: return "min-h-80 border-blue-300 card  p-4  min-h-64 min-w-48 border-3   bg-white";
-      case Gender.female: return "min-h-80 border-pink-300 card p-4 min-h-64 min-w-48 border-3   bg-white";
-      case Gender.other: return "min-h-80 card  shadow-blue-100 p-4 min-h-64 min-w-48 border-2   bg-white";
+      case Gender.male: return "min-h-80 border-primary card  p-4  min-h-64 min-w-48 border-3   ";
+      case Gender.female: return "min-h-80 border-secondary card p-4 min-h-64 min-w-48 border-3   ";
+      case Gender.other: return "min-h-80 card border-ghost shadow-blue-100 p-4 min-h-64 min-w-48 border-2   ";
     }
   }
   protected getImageSource(): string {

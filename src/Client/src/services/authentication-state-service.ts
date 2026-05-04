@@ -35,7 +35,7 @@ export class AuthenticationStateService {
         });
         this.AuhtenticationEventAppTarget.dispatchEvent(loginEvent)
         this.userModel.set(userModel);
-        let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 5000, (e)=> this.toasterService.addToast(toast));
+        let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 5000);
         this.toasterService.addToast(toast);
         window.localStorage.setItem('userModel', JSON.stringify(userModel))
         this.expiresInMs = new Date(userModel.expiresAt).getTime() - new Date().getTime();

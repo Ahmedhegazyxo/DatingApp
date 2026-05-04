@@ -26,7 +26,6 @@ public class ProfileView
     if (months < 0)
     {
         years--;
-        months += 12;
     }
 
     return years;

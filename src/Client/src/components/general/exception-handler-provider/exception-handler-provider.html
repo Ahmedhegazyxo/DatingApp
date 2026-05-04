@@ -1,4 +1,4 @@
-<dialog oncancel="event.preventDefault()" #errorModal id="errorModal" class="modal">
+<dialog #errorModal id="errorModal" class="modal" (cancel)="$event.preventDefault()">
   <div class="modal-box">
     <h3 class="text-lg font-bold">{{errorTitle()}}</h3>
     <p class="py-4">{{errorMessage()}}</p>
@@ -7,9 +7,7 @@
       {
       <button (click)="navigateToLogin()" class="btn btn-primary">Login</button>
       }
-      <form>
-        <button class="btn">Close</button>
-      </form>
+      <button class="btn" (click)="hideModal()">Close</button>
     </div>
   </div>
 </dialog>

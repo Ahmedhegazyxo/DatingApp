@@ -1,28 +1,40 @@
+using Api.Repositories.Members;
+
 namespace Api.Services;
 
 public class ProfileService : IProfileService
 {
     private readonly IUserClaimsService _claimsService;
-    private readonly ApplicationDbContext _context;
-    public ProfileService(IUserClaimsService claimsService, ApplicationDbContext context)
+    private readonly IProfileRepository _profileRepository;
+    public ProfileService(IUserClaimsService claimsService, IProfileRepository profileRepository)
     {
         _claimsService = claimsService;
-        _context = context;
+        _profileRepository = profileRepository;
     }
 
-    public async Task<ProfileView> GetMyProfile()
+    public async Task<ProfileView> GetMyProfile(CancellationToken cancellationToken = default)
     {
         string idClaim = _claimsService.ClaimsPrincipal!.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-        return await _context.Set<User>().Where(u => u.Id == new Guid(idClaim)).Select(e => new ProfileView
+        Profile? profile = await _profileRepository.ReadyByIdAsyncAsNoTracking(new Guid(idClaim), cancellationToken, true);
+        return new ProfileView
         {
-            FirstName = e.Profile!.FirstName,
-            LastName = e.Profile.LastName,
-            PhoneNumber = e.PhoneNumber,
-            Birthdate = e.Birthdate,
-            Email = e.Email,
-            Gender = e.Profile.Gender,
-            ProfileId = e.Id,
-            Username = e.Username
-        }).AsNoTracking().FirstAsync();
+            FirstName = profile!.FirstName,
+            LastName = profile!.LastName,
+            Gender = profile!.Gender,
+            Birthdate = profile!.User!.Birthdate,
+            Username = profile!.User!.Username,
+            Email = profile!.User!.Email,
+            PhoneNumber = profile!.User!.PhoneNumber,
+            ProfileId = profile!.Id
+        };
     }
+
+    public async Task<Guid> UpdateProfile(UpdateProfileDTO updateProfileDTO, CancellationToken cancellationToken = default)
+    {
+        Profile? profile = await _profileRepository.ReadyByIdAsync(new Guid(_claimsService.ClaimsPrincipal!.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value), cancellationToken, true);
+        profile!.Update(updateProfileDTO.Bigoraphy, updateProfileDTO.FirstName, updateProfileDTO.LastName, updateProfileDTO.Gender, updateProfileDTO.Username, updateProfileDTO.Birthdate);
+        await _profileRepository.UpdateAsync(profile!, cancellationToken);
+        return profile.Id;
+    }
+
 }

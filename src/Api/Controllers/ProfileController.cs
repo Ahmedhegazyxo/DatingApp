@@ -9,9 +9,15 @@ public class ProfileController : ControllerBase
         _profileService = profileService;
     }
     [HttpGet]
-    public async  Task<IActionResult> GetMyProfile()
+    public async  Task<IActionResult> GetMyProfile(CancellationToken cancellationToken)
     {
-        ProfileView userModel = await _profileService.GetMyProfile();
+        ProfileView userModel = await _profileService.GetMyProfile(cancellationToken);
         return Ok(userModel);
+    }
+    [HttpPut]
+    public async  Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO, CancellationToken cancellationToken)
+    {
+        Guid id = await _profileService.UpdateProfile(updateProfileDTO, cancellationToken);
+        return Ok(id);
     }
 }

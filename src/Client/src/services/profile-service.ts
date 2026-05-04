@@ -1,13 +1,14 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProfileModel } from '../models/views/ProfileModel';
+import { UpdateProfileDto } from '../models/dtos/updateProfileDto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
   private baseUri = 'http://localhost:5138/api/profile'
-  public profileModel = signal<ProfileModel | null>(null); 
+  public profileModel = signal<ProfileModel | null>(null);
   constructor(private httpClient: HttpClient) {
 
   }
@@ -15,5 +16,8 @@ export class ProfileService {
     this.httpClient.get<ProfileModel>(this.baseUri).subscribe({
       next: (value) => this.profileModel.set(value)
     });
+  }
+  public updateProfileBasicInfo(model: UpdateProfileDto) {
+    this.httpClient.put<string>(this.baseUri, model).subscribe();
   }
 }

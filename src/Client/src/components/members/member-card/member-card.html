@@ -1,6 +1,6 @@
-<div class="{{getCardClass()}}">
+<div class="{{getCardClass()}} bg-base-100 hover:bg-base-200">
     <div class="card-title flex justify-between min-h-10">
-        <div class="text-gray-500">
+        <div >
             {{memberModel.firstName}} {{memberModel.lastName}}
         </div>
         <div>
@@ -15,18 +15,18 @@
     <div>
         @if(memberModel.gender == 1){
 
-        <div class="badge bg-blue-300 badge-sm">M</div>
+        <div class="badge bg-primary badge-sm">M</div>
         }
         @else if(memberModel.gender == 2){
-        <div class="badge bg-pink-300 badge-sm">F</div>
+        <div class="badge bg-secondary badge-sm">F</div>
         }
         @else {
-        <div class="badge bg-gray-300 badge-sm">O</div>
+        <div class="badge badge-ghost badge-sm">O</div>
         }
-        <div class="badge bg-amber-300 badge-sm">{{memberModel.age}}</div>
+        <div class="badge bg-accent badge-sm">{{memberModel.age}}</div>
 
     </div>
-    <div class="card-body opacity-40">
-        <img src="{{getImageSource()}}" class="max-h-50 max-w-50 bg-white" />
+    <div class="card-body">
+        <img src="{{getImageSource()}}" class="max-h-50 max-w-50" />
     </div>
 </div>

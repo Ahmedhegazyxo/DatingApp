@@ -43,7 +43,6 @@ export class LoginService {
         });
         this.authenticationStateService.loginTriggered(response.body as UserModel);
         this.router.navigate(['/']);
-        let toast = new ToastView();
         
     }
 }

@@ -1,0 +1,17 @@
+<div>
+    <form #editForm (ngSubmit)="editProfileSubmitted()">
+        <div>
+            <label>Username</label>
+            <input [(ngModel)]="profileModel.username" name="username" type="text" class="input"
+                placeholder="johndoe123">
+        </div>
+        <div>
+            <label>First Name</label>
+            <input [(ngModel)]="profileModel.firstName" name="firstName" type="text" class="input" placeholder="John">
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input [(ngModel)]="profileModel.firstName" name="firstName" type="text" class="input" placeholder="John">
+        </div>
+    </form>
+</div>

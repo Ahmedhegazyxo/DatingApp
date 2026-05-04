@@ -1,6 +1,7 @@
 using System.Net;
 using System.Security.Authentication;
 using System.Text.Json;
+using Castle.DynamicProxy;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Middlewares;

@@ -6,6 +6,7 @@ import { UserModel } from '../models/views/UserModel';
 import { LoadingStateProvider } from '../components/general/loading-state-provider/loading-state-provider';
 import { ExceptionHandlerProvider } from '../components/general/exception-handler-provider/exception-handler-provider';
 import { ToasterProvider } from "../components/general/toaster-provider/toaster-provider";
+import { AcessabilityService } from '../services/acessability-service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Navbar, LoadingStateProvider, ExceptionHandlerProvider, ToasterProvider],
@@ -14,8 +15,10 @@ import { ToasterProvider } from "../components/general/toaster-provider/toaster-
 })
 export class App implements OnInit {
   protected userModel = signal<UserModel | null>(null);
-  constructor(private authenticationStateService: AuthenticationStateService, protected router: Router) { }
- 
+  constructor(private authenticationStateService: AuthenticationStateService,
+     protected router: Router,
+     private acessabilityService : AcessabilityService) { }
+
   ngOnInit(): void {
     this.setUp();
     let user = this.authenticationStateService.getUserModelInfo();
@@ -23,6 +26,15 @@ export class App implements OnInit {
   }
 
   private setUp(): void {
+    var theme = localStorage.getItem('data-theme');
+    if (theme == null){
+      this.acessabilityService.isDarkMode.set(false);
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    else {
+      this.acessabilityService.isDarkMode.set(true);
+      document.documentElement.setAttribute('data-theme', theme);
+    }
     this.authenticationStateService.AuhtenticationEventAppTarget.addEventListener('loginevent', (e: Event) => {
       let userEvent = e as CustomEvent<UserModel>;
       let user = userEvent.detail;

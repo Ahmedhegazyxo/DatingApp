@@ -1,5 +1,5 @@
-<div class="flex">
-  <div class="card p-4 bg-white border-2 border-gray-300">
+<div class="flex flex-wrap justify-center py-4">
+  <div class="card p-10 border-2 border-neutral bg-base-200">
     <div class="avatar ring-1  rounded-full w-40">
       <img src="/assets/logo/unknown.png" class="opacity-50" />
     </div>
@@ -8,23 +8,31 @@
         {{this.profileService.profileModel()?.lastName}}</span>
       @if(this.profileService.profileModel()?.gender == 0){
 
-      <div class="badge badge-sm bg-gray-300">O</div>
+      <div class="badge badge-sm bg-neutral">O</div>
       }
       @else if (this.profileService.profileModel()?.gender == 1){
-      <div class="badge badge-sm bg-blue-300">M</div>
+      <div class="badge badge-sm bg-primary">M</div>
       }
       @else {
-      <div class="badge badge-sm bg-pink-300">F</div>
+      <div class="badge badge-sm bg-secondary">F</div>
       }
-      <div class="badge badge-sm bg-amber-300">{{this.profileService.profileModel()?.age}}</div>
+      <div class="badge badge-sm bg-success">{{this.profileService.profileModel()?.age}}</div>
+    </div>
+    <div class="mx-2">
+      <span class="text-gray-400">{{this.profileService.profileModel()?.birthdate | date}}</span>
+    </div>
+    <div class="my-2 flex justify-end">
+      <button class="btn btn-info"><i class="fa fa-pen" (click)="editbuttonClicked()"></i></button>
     </div>
   </div>
-  <div class="flex-1 min-h-full flex flex-col gap-4.5">
-    <div class="card p-4 bg-white border-2 border-gray-300 ml-4 flex-1">
+  <div class="flex-1 min-h-full flex flex-col gap-4.5 justify-between ">
+    <div class="card p-4 border-2 border-neutral ml-4 flex-1 bg-base-200 ">
       <h2 class="text-xl mb-2">Profile Preferences</h2>
+      <app-profile-preferences></app-profile-preferences>
     </div>
-    <div class="card p-4 bg-white border-2 border-gray-300 ml-4 flex-1">
+    <div class="card p-4 border-2 border-neutral ml-4 flex-1 bg-base-200">
       <h2 class="text-xl mb-2">Profile Stats</h2>
     </div>
   </div>
 </div>
+<app-edit-profile-form (onValidSubmitAction)="profileUpdated()"></app-edit-profile-form>

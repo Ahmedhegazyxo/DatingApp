@@ -14,14 +14,15 @@ export class ExceptionHandlerProvider implements AfterViewInit {
   @ViewChild('errorModal', { static: true }) errorModal!: ElementRef<HTMLDialogElement>;
   constructor(private errorHandlerService: ErrorHandlerService, private router: Router) {
   }
+  protected hideModal() : void {
+    this.errorModal.nativeElement.close();
+  }
   ngAfterViewInit(): void {
     this.errorHandlerService.errorHandlerEventTarget.addEventListener('errorEvent', (e: Event) => {
       let errorEvent = e as CustomEvent<HttpErrorResponse>;
       let apiError = errorEvent.detail.error as ApiErrorView;
       try
       {
-
-        
         this.errorTitle.set(apiError.status.toString());
         this.errorMessage.set(apiError.title);
         this.errorStatusCode.set(apiError.status);
@@ -35,8 +36,6 @@ export class ExceptionHandlerProvider implements AfterViewInit {
         this.errorModal.nativeElement.showModal();
       }
     });
-    this.errorModal.nativeElement.addEventListener('cancel', (e: Event) =>
-      e.preventDefault());
   }
   protected errorTitle = signal<string>('');
   protected errorMessage = signal<string>('');

@@ -3,6 +3,7 @@ import { Avatar } from '../avatar/avatar';
 import { UserModel } from '../../models/views/UserModel';
 import { LoginService } from '../../services/login-service';
 import { RouterLinkActive, RouterLinkWithHref } from "@angular/router";
+import { AcessabilityService } from '../../services/acessability-service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import { RouterLinkActive, RouterLinkWithHref } from "@angular/router";
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  constructor(private loginService : LoginService) {
+  constructor(private loginService : LoginService,protected accessabilityService : AcessabilityService) {
     
   }
   @Input() public userModel = signal<UserModel | null>(null);

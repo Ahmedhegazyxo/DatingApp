@@ -6,7 +6,7 @@ public class TokenService : ITokenService
 {
     IConfiguration _config;
     IUserClaimsService _userClaimsService;
-    private const int TokenExpirationTimeInMinutes = 5;
+    private const int TokenExpirationTimeInMinutes = 15;
     public TokenService(IConfiguration config, IUserClaimsService userClaimsService)
     {
         _config = config;

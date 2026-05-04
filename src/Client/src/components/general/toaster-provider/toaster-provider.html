@@ -1,4 +1,4 @@
-<div class="toast toast-right min-w-70 text-white z-100">
+<div class="toast toast-right min-w-70 z-100">
   @for (toastItem of toasterService.toastList(); track $index) {
     <div class="relative animate-fade animate-once min-w-10">
       <button class="w-full p-2 {{ toastClass(toastItem.severity) }}"
@@ -8,7 +8,7 @@
           <div class="text-xs">{{ toastItem.description }}</div>
         </div>
       </button>
-      <a class="btn btn-circle btn-ghost btn-xs absolute top-2 right-2 text-white"
+      <a class="btn btn-circle btn-xs absolute top-2 right-2"
         (click)="toasterService.removeToast(toastItem); $event.stopPropagation()"
         aria-label="Close"><i class="fa fa-close"></i></a>
     </div>

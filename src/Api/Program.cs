@@ -1,10 +1,12 @@
 
 using Api.Repositories;
 using Api.Repositories.Members;
+using Api.Services.Health;
 using Api.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
+using Microsoft.EntityFrameworkCore.Design;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IUserClaimsService, UserClaimsService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IMemberMatchingService,MemberMatchingService>();
+builder.Services.AddSingleton<IHealthPerformanceMetrics, HealthPerformanceMetrics>();
 builder.Services.AddSwaggerGen(
     op => op.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
     {
@@ -37,6 +40,7 @@ using (var scope = app.Services.CreateScope())
 }
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseCors("DatingAppClient");
+app.UseMiddleware<HealthMonitorMiddleware>();
 app.UseMiddleware<JWTAuthenticatorMiddleware>();
 app.UseHttpsRedirection();
 app.UseSwagger();
