@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, input, signal, ViewChild } from '@angular/core';
-import { ErrorHandlerService } from '../../../services/error-handler-service';
+import { ErrorHandlerService } from '../../../services/general/error-handler-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiErrorView } from '../../../models/views/ApiErrorView';
@@ -12,12 +12,18 @@ import { ApiErrorView } from '../../../models/views/ApiErrorView';
 })
 export class ExceptionHandlerProvider implements AfterViewInit {
   @ViewChild('errorModal', { static: true }) errorModal!: ElementRef<HTMLDialogElement>;
-  constructor(private errorHandlerService: ErrorHandlerService, private router: Router) {
+  constructor(private errorHandlerService: ErrorHandlerService, private router: Router) 
+  {
   }
   protected hideModal() : void {
     this.errorModal.nativeElement.close();
   }
+
   ngAfterViewInit(): void {
+    this.errorModal.nativeElement.oncancel = (e)=> {
+      e.preventDefault();
+      this.hideModal();
+    }
     this.errorHandlerService.errorHandlerEventTarget.addEventListener('errorEvent', (e: Event) => {
       let errorEvent = e as CustomEvent<HttpErrorResponse>;
       let apiError = errorEvent.detail.error as ApiErrorView;

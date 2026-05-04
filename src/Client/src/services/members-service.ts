@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/htt
 import { MemberModel } from "../models/views/MemberModel";
 import { Injectable, signal } from "@angular/core";
 import { MemberMatchView } from "../models/views/MemberMatchView";
-import { ToasterService } from "./toaster-service";
+import { ToasterService } from "./general/toaster-service";
 import { ToastView } from "../models/views/ToastView";
 import { Severity } from "../models/enums/severity";
 

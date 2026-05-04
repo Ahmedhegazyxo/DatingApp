@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UpdateProfileDto } from '../../../models/dtos/updateProfileDto';
 import { ProfileService } from '../../../services/profile-service';
+import { DialogProvider } from '../../../services/general/dialog-provider';
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -10,21 +11,18 @@ import { ProfileService } from '../../../services/profile-service';
   styleUrl: './edit-profile-form.css',
 })
 export class EditProfileForm {
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService, private dialogProvider: DialogProvider) {
 
   }
   @Output() onValidSubmitAction = new EventEmitter();
   protected profileModel: UpdateProfileDto = new UpdateProfileDto();
-  protected isVisible = signal(false)
-  protected editProfileSubmitted(): void {
-  }
-  public showEditModal(model: UpdateProfileDto) {
-    this.profileModel = model;
-    this.isVisible.set(true);
-  }
-  protected handleValidSubmit() {
+  protected editProfileSubmitted(): void 
+  {
     this.profileService.updateProfileBasicInfo(this.profileModel);
-    this.onValidSubmitAction.emit();
-    this.isVisible.set(false);
+    let dialogId = this.dialogProvider.getCurrentDialogInstance();
+    this.dialogProvider.close(dialogId!);
+  }
+
+  protected handleValidSubmit() {
   }
 }

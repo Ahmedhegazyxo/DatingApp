@@ -1,17 +1,49 @@
 <div>
-    <form #editForm (ngSubmit)="editProfileSubmitted()">
-        <div>
-            <label>Username</label>
-            <input [(ngModel)]="profileModel.username" name="username" type="text" class="input"
-                placeholder="johndoe123">
+    <form #editForm="ngForm" (ngSubmit)="editProfileSubmitted()" class="space-y-6">
+        <div class="form-control w-full">
+            <label class="label">
+                <span class="label-text font-medium">Username</span>
+            </label>
+            <input [(ngModel)]="profileModel.username" name="username" type="text" class="input input-bordered w-full"
+                placeholder="johndoe123" />
         </div>
-        <div>
-            <label>First Name</label>
-            <input [(ngModel)]="profileModel.firstName" name="firstName" type="text" class="input" placeholder="John">
+
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-medium">First name</span>
+                </label>
+                <input [(ngModel)]="profileModel.firstName" name="firstName" type="text" class="input input-bordered"
+                    placeholder="John" />
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-medium">Last name</span>
+                </label>
+                <input [(ngModel)]="profileModel.lastName" name="lastName" type="text" class="input input-bordered"
+                    placeholder="Doe" />
+            </div>
         </div>
-        <div>
-            <label>Last Name</label>
-            <input [(ngModel)]="profileModel.firstName" name="firstName" type="text" class="input" placeholder="John">
+
+        <!-- Phone -->
+        <div class="form-control w-full">
+            <label class="label">
+                <span class="label-text font-medium">Phone number</span>
+            </label>
+            <input [(ngModel)]="profileModel.phoneNumber" name="phoneNumber" type="tel"
+                class="input input-bordered w-full" placeholder="+21100" />
         </div>
+
+        <!-- Actions -->
+        <div class="modal-action flex justify-end gap-3">
+            <button type="reset" class="btn btn-ghost">
+                Reset
+            </button>
+            <button type="submit" class="btn btn-info">
+                Save changes
+            </button>
+        </div>
+
     </form>
 </div>

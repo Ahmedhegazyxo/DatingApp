@@ -6,10 +6,11 @@ import { UserModel } from '../models/views/UserModel';
 import { LoadingStateProvider } from '../components/general/loading-state-provider/loading-state-provider';
 import { ExceptionHandlerProvider } from '../components/general/exception-handler-provider/exception-handler-provider';
 import { ToasterProvider } from "../components/general/toaster-provider/toaster-provider";
-import { AcessabilityService } from '../services/acessability-service';
+import { AcessabilityService } from '../services/general/acessability-service';
+import { Dialogs } from "../components/general/dialogs/dialogs";
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, LoadingStateProvider, ExceptionHandlerProvider, ToasterProvider],
+  imports: [RouterOutlet, Navbar, LoadingStateProvider, ExceptionHandlerProvider, ToasterProvider, Dialogs],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

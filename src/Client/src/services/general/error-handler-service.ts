@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ApiErrorView } from "../models/views/ApiErrorView";
+import { ApiErrorView } from "../../models/views/ApiErrorView";
 
 @Injectable({
     providedIn: 'root'

@@ -3,7 +3,7 @@ import { Avatar } from '../avatar/avatar';
 import { UserModel } from '../../models/views/UserModel';
 import { LoginService } from '../../services/login-service';
 import { RouterLinkActive, RouterLinkWithHref } from "@angular/router";
-import { AcessabilityService } from '../../services/acessability-service';
+import { AcessabilityService } from '../../services/general/acessability-service';
 
 @Component({
   selector: 'app-navbar',

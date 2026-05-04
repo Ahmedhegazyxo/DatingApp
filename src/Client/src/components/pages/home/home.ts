@@ -10,8 +10,8 @@ import { MembersList } from '../../members/members-list/members-list';
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
-  constructor(private router: Router, protected authStateService: AuthenticationStateService) {
-
+  constructor(private router: Router,
+    protected authStateService: AuthenticationStateService) {
   }
   ngOnInit(): void {
     if (this.authStateService.userModel() == null) {

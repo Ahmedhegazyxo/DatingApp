@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationStateService } from "./authentication-state-service";
 import { UserModel } from "../models/views/UserModel";
-import { ToasterService } from "./toaster-service";
+import { ToasterService } from "./general/toaster-service";
 import { ToastView } from "../models/views/ToastView";
 import { Severity } from "../models/enums/severity";
 

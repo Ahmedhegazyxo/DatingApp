@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { ToastView } from '../../../models/views/ToastView';
 import { Severity } from '../../../models/enums/severity';
-import { ToasterService } from '../../../services/toaster-service';
+import { ToasterService } from '../../../services/general/toaster-service';
 
 @Component({
   selector: 'app-toaster-provider',

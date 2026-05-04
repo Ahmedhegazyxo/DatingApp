@@ -18,6 +18,8 @@ export class ProfileService {
     });
   }
   public updateProfileBasicInfo(model: UpdateProfileDto) {
-    this.httpClient.put<string>(this.baseUri, model).subscribe();
+    this.httpClient.put<string>(this.baseUri, model).subscribe({
+      next : ()=> this.getProfileInfo(),
+    });
   }
 }

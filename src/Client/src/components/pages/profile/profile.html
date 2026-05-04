@@ -22,7 +22,7 @@
       <span class="text-gray-400">{{this.profileService.profileModel()?.birthdate | date}}</span>
     </div>
     <div class="my-2 flex justify-end">
-      <button class="btn btn-info"><i class="fa fa-pen" (click)="editbuttonClicked()"></i></button>
+      <button class="btn btn-info" (click)="editbuttonClicked()"><i class="fa fa-pen" ></i></button>
     </div>
   </div>
   <div class="flex-1 min-h-full flex flex-col gap-4.5 justify-between ">
@@ -35,4 +35,3 @@
     </div>
   </div>
 </div>
-<app-edit-profile-form (onValidSubmitAction)="profileUpdated()"></app-edit-profile-form>
