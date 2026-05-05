@@ -2,7 +2,7 @@ import { AfterViewInit, Component, computed, Inject, signal, ViewChild } from '@
 import { ProfileService } from '../../../services/profile-service';
 import { ProfilePreferences } from "../../profile/profile-preferences/profile-preferences";
 import { DatePipe } from '@angular/common';
-import { UpdateProfileDto } from '../../../models/dtos/updateProfileDto';
+import { UpdateProfileDto } from '../../../models/dtos/update-profile-dto';
 import { DialogProvider } from '../../../services/general/dialog-provider';
 import { EditProfileForm } from '../../profile/edit-profile-form/edit-profile-form';
 

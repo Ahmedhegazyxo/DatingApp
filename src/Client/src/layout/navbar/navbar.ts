@@ -1,6 +1,6 @@
 import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { Avatar } from '../avatar/avatar';
-import { UserModel } from '../../models/views/UserModel';
+import { UserModel } from '../../models/views/user-model';
 import { LoginService } from '../../services/login-service';
 import { RouterLinkActive, RouterLinkWithHref } from "@angular/router";
 import { AcessabilityService } from '../../services/general/acessability-service';

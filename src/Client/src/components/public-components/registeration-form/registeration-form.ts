@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RegisterationService } from '../../../services/registeration-service';
-import { RegisterDto } from '../../../models/dtos/RegisterDto';
+import { RegisterDto } from '../../../models/dtos/register-dto';
 
 @Component({
   selector: 'app-registeration-form',

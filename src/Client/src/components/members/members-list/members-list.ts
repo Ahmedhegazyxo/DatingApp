@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, input } from '@angular/core';
 import { MemberCard } from '../member-card/member-card';
 import { MembersService } from '../../../services/members-service';
-import { MemberModel } from '../../../models/views/MemberModel';
-import { UserModel } from '../../../models/views/UserModel';
+import { MemberModel } from '../../../models/views/member-model';
+import { UserModel } from '../../../models/views/user-model';
 
 @Component({
   selector: 'app-members-list',

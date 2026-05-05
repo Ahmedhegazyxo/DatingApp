@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ProfileModel } from '../models/views/ProfileModel';
-import { UpdateProfileDto } from '../models/dtos/updateProfileDto';
+import { ProfileModel } from '../models/views/profile-model';
+import { UpdateProfileDto } from '../models/dtos/update-profile-dto';
 
 @Injectable({
   providedIn: 'root',

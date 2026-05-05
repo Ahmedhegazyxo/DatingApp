@@ -1,5 +1,5 @@
 import { Component, Injectable, signal, Type } from '@angular/core';
-import { DialogInstanceView } from '../../models/views/DialogInstanceView';
+import { DialogInstanceView } from '../../models/views/dialog-instance-view';
 
 @Injectable({
   providedIn: 'root',

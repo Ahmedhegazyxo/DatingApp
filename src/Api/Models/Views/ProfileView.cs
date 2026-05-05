@@ -11,6 +11,7 @@ public class ProfileView
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public DateTime Birthdate { get; set; } = new();
+    public string? Biography { get; set; }
     public int Age => CalculateAgeWithMonths(Birthdate);
     public Gender Gender { get; set; }
     public static int CalculateAgeWithMonths(DateTime birthDate)

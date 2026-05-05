@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, input, signal, ViewChild } from '
 import { ErrorHandlerService } from '../../../services/general/error-handler-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ApiErrorView } from '../../../models/views/ApiErrorView';
+import { ApiErrorView } from '../../../models/views/api-error-view';
 
 @Component({
   selector: 'app-exception-handler-provider',

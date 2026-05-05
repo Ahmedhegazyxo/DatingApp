@@ -4,7 +4,7 @@ import { catchError, finalize, Observable, throwError } from "rxjs";
 import { AuthenticationStateService } from "./authentication-state-service";
 import { LoadingIndicatorService } from "./general/loading-indicator-service";
 import { ErrorHandlerService } from "./general/error-handler-service";
-import { ApiErrorView } from "../models/views/ApiErrorView";
+import { ApiErrorView } from "../models/views/api-error-view";
 export function authenticationIntercept(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
 
     let authStateService = inject(AuthenticationStateService);

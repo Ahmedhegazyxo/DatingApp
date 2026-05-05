@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { ToastView } from '../../../models/views/ToastView';
+import { ToastView } from '../../../models/views/toast-view';
 import { Severity } from '../../../models/enums/severity';
 import { ToasterService } from '../../../services/general/toaster-service';
 

@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { Navbar } from '../layout/navbar/navbar';
 import { AuthenticationStateService } from '../services/authentication-state-service';
-import { UserModel } from '../models/views/UserModel';
+import { UserModel } from '../models/views/user-model';
 import { LoadingStateProvider } from '../components/general/loading-state-provider/loading-state-provider';
 import { ExceptionHandlerProvider } from '../components/general/exception-handler-provider/exception-handler-provider';
 import { ToasterProvider } from "../components/general/toaster-provider/toaster-provider";

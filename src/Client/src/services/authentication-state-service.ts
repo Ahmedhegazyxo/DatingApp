@@ -1,8 +1,8 @@
 import { Injectable, signal } from "@angular/core";
-import { UserModel } from "../models/views/UserModel";
+import { UserModel } from "../models/views/user-model";
 import { Router } from "@angular/router";
 import { Severity } from "../models/enums/severity";
-import { ToastView } from "../models/views/ToastView";
+import { ToastView } from "../models/views/toast-view";
 import { ToasterService } from "./general/toaster-service";
 
 @Injectable({

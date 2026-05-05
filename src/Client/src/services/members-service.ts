@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
-import { MemberModel } from "../models/views/MemberModel";
+import { MemberModel } from "../models/views/member-model";
 import { Injectable, signal } from "@angular/core";
-import { MemberMatchView } from "../models/views/MemberMatchView";
+import { MemberMatchView } from "../models/views/member-match-view";
 import { ToasterService } from "./general/toaster-service";
-import { ToastView } from "../models/views/ToastView";
+import { ToastView } from "../models/views/toast-view";
 import { Severity } from "../models/enums/severity";
 
 @Injectable({

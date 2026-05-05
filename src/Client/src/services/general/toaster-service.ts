@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { ToastView } from '../../models/views/ToastView';
+import { ToastView } from '../../models/views/toast-view';
 
 @Injectable({
   providedIn: 'root',

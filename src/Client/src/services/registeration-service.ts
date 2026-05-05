@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse, HttpStatusCode } from "@angular/common/http";
-import { RegisterDto } from "../models/dtos/RegisterDto";
+import { RegisterDto } from "../models/dtos/register-dto";
 import { Injectable } from "@angular/core";
-import { UserModel } from "../models/views/UserModel";
+import { UserModel } from "../models/views/user-model";
 import { AuthenticationStateService } from "./authentication-state-service";
 import { Router } from "@angular/router";
 

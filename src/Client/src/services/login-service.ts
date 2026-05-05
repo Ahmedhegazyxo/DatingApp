@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpResponse, HttpStatusCode } from "@angular/common/http";
-import { loginDto } from "../models/dtos/loginDto";
+import { loginDto } from "../models/dtos/login-dto";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationStateService } from "./authentication-state-service";
-import { UserModel } from "../models/views/UserModel";
+import { UserModel } from "../models/views/user-model";
 import { ToasterService } from "./general/toaster-service";
-import { ToastView } from "../models/views/ToastView";
+import { ToastView } from "../models/views/toast-view";
 import { Severity } from "../models/enums/severity";
 
 @Injectable({

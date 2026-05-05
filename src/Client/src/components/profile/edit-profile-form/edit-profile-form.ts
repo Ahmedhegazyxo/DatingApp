@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UpdateProfileDto } from '../../../models/dtos/updateProfileDto';
+import { UpdateProfileDto } from '../../../models/dtos/update-profile-dto';
 import { ProfileService } from '../../../services/profile-service';
 import { DialogProvider } from '../../../services/general/dialog-provider';
 

@@ -25,7 +25,8 @@ public class ProfileService : IProfileService
             Username = profile!.User!.Username,
             Email = profile!.User!.Email,
             PhoneNumber = profile!.User!.PhoneNumber,
-            ProfileId = profile!.Id
+            ProfileId = profile!.Id,
+            Biography = profile.Biography
         };
     }
 

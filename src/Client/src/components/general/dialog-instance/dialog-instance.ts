@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
-import { DialogInstanceView } from '../../../models/views/DialogInstanceView';
+import { DialogInstanceView } from '../../../models/views/dialog-instance-view';
 import { DialogProvider } from '../../../services/general/dialog-provider';
 import { EditProfileForm } from '../../profile/edit-profile-form/edit-profile-form';
 

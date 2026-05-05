@@ -1,5 +1,5 @@
 import { Component, Input, output } from '@angular/core';
-import { MemberModel } from '../../../models/views/MemberModel';
+import { MemberModel } from '../../../models/views/member-model';
 import { Gender } from '../../../models/enums/gender';
 import { Router } from '@angular/router';
 
