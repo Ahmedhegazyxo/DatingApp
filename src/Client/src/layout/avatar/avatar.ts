@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 })
 export class Avatar  {
   @Input() public userAbbreviation!: string | null;
-  @Input() public username!: string | null;
   constructor(private router: Router) {
   }
   profileClicked() {

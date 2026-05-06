@@ -22,7 +22,4 @@ export class EditProfileForm {
     let dialogId = this.dialogProvider.getCurrentDialogInstance();
     this.dialogProvider.close(dialogId!);
   }
-
-  protected handleValidSubmit() {
-  }
 }

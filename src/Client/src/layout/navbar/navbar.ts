@@ -4,6 +4,7 @@ import { UserModel } from '../../models/views/user-model';
 import { LoginService } from '../../services/login-service';
 import { RouterLinkActive, RouterLinkWithHref } from "@angular/router";
 import { AcessabilityService } from '../../services/general/acessability-service';
+import { AuthenticationStateService } from '../../services/authentication-state-service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,22 +13,21 @@ import { AcessabilityService } from '../../services/general/acessability-service
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  constructor(private loginService : LoginService,protected accessabilityService : AcessabilityService) {
-    
-  }
-  @Input() public userModel = signal<UserModel | null>(null);
-  protected username = computed<string | null>(()=>{
-    return this.userModel()?.username ?? null;
-  });
-  protected logout(){
-    this.loginService.Logout(); 
-  }
+   
   protected usernameAbbreviation = computed<string | null>(() => {
-    if (this.userModel() == null) {
-      return null;
-    }
-    else {
-      return this.userModel()!.firstName.charAt(0).toUpperCase() + this.userModel()!.lastName.charAt(0).toUpperCase();
-    }
+    if (this.authenticationStateService.userModel() == null)
+      return null
+    else
+      return this.authenticationStateService.userModel()!.firstName.charAt(0).toUpperCase() + this.authenticationStateService.userModel()!.lastName.charAt(0).toUpperCase()
+
   })
+  constructor(private loginService: LoginService,
+     protected accessabilityService: AcessabilityService,
+    protected authenticationStateService : AuthenticationStateService) {
+
+  }
+
+  protected logout() {
+    this.loginService.Logout();
+  }
 }

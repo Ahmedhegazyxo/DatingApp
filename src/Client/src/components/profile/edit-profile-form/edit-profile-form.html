@@ -34,8 +34,21 @@
             <input [(ngModel)]="profileModel.phoneNumber" name="phoneNumber" type="tel"
                 class="input input-bordered w-full" placeholder="+21100" />
         </div>
+        <div class="form-control w-full">
+            <label class="label">
+                <span class="label-text font-medium">Biography</span>
+            </label>
+            <input [(ngModel)]="profileModel.biography" name="biography" type="text" class="input input-bordered w-full"
+                placeholder="Bio" />
+        </div>
+        <div class="form-control w-full">
+            <label class="label">
+                <span class="label-text font-medium">Birthdate</span>
+            </label>
+            <input [(ngModel)]="profileModel.birthdate" name="birthdate" type="date" class="input w-full"
+                placeholder="Birthdate" />
+        </div>
 
-        <!-- Actions -->
         <div class="modal-action flex justify-end gap-3">
             <button type="reset" class="btn btn-ghost">
                 Reset

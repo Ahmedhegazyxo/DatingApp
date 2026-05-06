@@ -35,16 +35,9 @@ public class User : BaseEntity<Guid>
     }
     public void Update(string? username = null, DateTime? birthdate = null)
     {
-        if (username == null && birthdate == null) return;
-        else if (username == null)
-        {
-            Birthdate = birthdate!.Value;
-            return;
-        }
-        else if (birthdate == null)
-        {
-            Username = username;
-            return;
-        }
+        if (username != null)
+            this.Username = username;
+        if (birthdate != null)
+            this.Birthdate = birthdate.Value;
     }
 }

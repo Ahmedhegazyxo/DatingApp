@@ -37,12 +37,7 @@ export class LoginService {
 
     }
     protected onAcceptedStatusCallback(response: HttpResponse<UserModel>): void {
-        this.authenticationStateService.AuhtenticationEventAppTarget.addEventListener('loginevent', (e: Event) => {
-            const event = e as CustomEvent<UserModel>;
-            
-        });
-        this.authenticationStateService.loginTriggered(response.body as UserModel);
-        this.router.navigate(['/']);
-        
+            this.authenticationStateService.loginTriggered(response.body as UserModel);
     }
+    
 }

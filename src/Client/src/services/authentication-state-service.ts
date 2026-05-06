@@ -11,7 +11,6 @@ import { ToasterService } from "./general/toaster-service";
 
 export class AuthenticationStateService {
     public userModel = signal<UserModel | null>(null);
-    public AuhtenticationEventAppTarget: EventTarget = new EventTarget();
     protected expiresInMs: number | null = null;
     constructor(protected router: Router, protected toasterService: ToasterService) {
         this.userModel.set(this.getUserModelInfo());
@@ -30,22 +29,10 @@ export class AuthenticationStateService {
     }
 
     public loginTriggered(userModel: UserModel): void {
-        const loginEvent: CustomEvent<UserModel> = new CustomEvent<UserModel>('loginevent', {
-            detail: userModel
-        });
-        this.AuhtenticationEventAppTarget.dispatchEvent(loginEvent)
-        this.userModel.set(userModel);
-        let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 5000);
-        this.toasterService.addToast(toast);
-        window.localStorage.setItem('userModel', JSON.stringify(userModel))
-        this.expiresInMs = new Date(userModel.expiresAt).getTime() - new Date().getTime();
-        setTimeout(() => {
-            this.tokenExpired();
-        }, this.expiresInMs);
+        this.setUserModelInfo(userModel);
+        this.router.navigate(['/'])
     }
     public logoutTriggered() {
-        const logoutEvent: CustomEvent = new CustomEvent('logoutevent');
-        this.AuhtenticationEventAppTarget.dispatchEvent(logoutEvent);
         this.userModel.set(null);
         window.localStorage.removeItem('userModel');
         let toast = new ToastView('Logout', 'Logged out successfully', Severity.Success, 5000);
@@ -54,6 +41,7 @@ export class AuthenticationStateService {
     }
     public getUserModelInfo(): UserModel | null {
         let userModelString = window.localStorage.getItem('userModel');
+        console.log('local storage accessed');
         if (userModelString == null) {
             return null;
         }
@@ -61,6 +49,16 @@ export class AuthenticationStateService {
             let parse = JSON.parse(userModelString as string) as UserModel;
             return parse;
         }
+    }
+    public setUserModelInfo(userModel: UserModel) {
+        this.userModel.set(userModel);
+        let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 3000);
+        this.toasterService.addToast(toast);
+        window.localStorage.setItem('userModel', JSON.stringify(userModel))
+        this.expiresInMs = new Date(userModel.expiresAt).getTime() - new Date().getTime();
+        setTimeout(() => {
+            this.tokenExpired();
+        }, this.expiresInMs);
     }
     private tokenExpired() {
         this.logoutTriggered();

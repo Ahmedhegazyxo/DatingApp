@@ -15,20 +15,17 @@ import { Dialogs } from "../components/general/dialogs/dialogs";
   styleUrl: './app.css'
 })
 export class App implements OnInit {
-  protected userModel = signal<UserModel | null>(null);
-  constructor(private authenticationStateService: AuthenticationStateService,
-     protected router: Router,
-     private acessabilityService : AcessabilityService) { }
+  constructor(protected authenticationStateService: AuthenticationStateService,
+    protected router: Router,
+    private acessabilityService: AcessabilityService) { }
 
   ngOnInit(): void {
     this.setUp();
-    let user = this.authenticationStateService.getUserModelInfo();
-    this.userModel.set(user);
   }
 
   private setUp(): void {
     var theme = localStorage.getItem('data-theme');
-    if (theme == null){
+    if (theme == null) {
       this.acessabilityService.isDarkMode.set(false);
       document.documentElement.setAttribute('data-theme', 'light');
     }
@@ -36,13 +33,5 @@ export class App implements OnInit {
       this.acessabilityService.isDarkMode.set(true);
       document.documentElement.setAttribute('data-theme', theme);
     }
-    this.authenticationStateService.AuhtenticationEventAppTarget.addEventListener('loginevent', (e: Event) => {
-      let userEvent = e as CustomEvent<UserModel>;
-      let user = userEvent.detail;
-      this.userModel.set(user);
-    });
-    this.authenticationStateService.AuhtenticationEventAppTarget.addEventListener('logoutevent', () => {
-      this.userModel.set(null);
-    })
   }
 }

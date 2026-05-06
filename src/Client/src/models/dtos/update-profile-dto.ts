@@ -4,4 +4,5 @@ export class UpdateProfileDto {
     public lastName :string = '';
     public phoneNumber : string = '';
     public birthdate : Date = new Date();
+    public biography : string = '';
 }

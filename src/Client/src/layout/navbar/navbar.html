@@ -15,7 +15,7 @@
             <img src="/assets/logo/logo.png" class="max-h-15">
         </a>
         <div class="sm:flex gap-4 hidden">
-            @if(userModel() != null){
+            @if(authenticationStateService.userModel() != null){
 
             <a class="p-3 link no-underline" routerLink="/"
                 routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
@@ -36,7 +36,7 @@
                 [routerLinkActiveOptions]="{exact : true}">Register</a>
             }
         </div>
-        @if(userModel() != null)
+        @if(authenticationStateService.userModel() != null)
         {
         <div class="flex items-center gap-4">
             <button class="cursor-pointer avatar  rounded-full ring-2 p-3 bg-base-300" (click)="this.accessabilityService.toggleTheme()">
@@ -47,7 +47,7 @@
                     <i class="text-primary fa-regular fa-moon"></i>
                 }
             </button>
-            <app-avatar [userAbbreviation]="usernameAbbreviation()" [username]="username()"></app-avatar>
+            <app-avatar [userAbbreviation]="usernameAbbreviation()"></app-avatar>
             <button (click)="logout()" class="btn btn-error rounded-full text-white">
                 <span class="md:block hidden">Logout</span>
                 <span><i class="fa-solid fa-right-from-bracket"></i></span>
