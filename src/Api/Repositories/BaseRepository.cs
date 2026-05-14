@@ -142,14 +142,14 @@ public class BaseRepository<TEntity, TId> : IBaseRepository<TEntity, TId> where 
             return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
     }
 
-    public async Task<TId> UpdateAsync(TEntity entity,
+    public async Task<TEntity> UpdateAsync(TEntity entity,
      CancellationToken cancellationToken = default!)
     {
         TEntity oldEntity = await _context.Set<TEntity>().FirstAsync(e => e.Id.Equals(entity.Id), cancellationToken);
         oldEntity = entity;
-        await Task.Run(async () => _context.Set<TEntity>().Update(oldEntity));
+        _context.Set<TEntity>().Update(oldEntity);
         await _context.SaveChangesAsync(cancellationToken);
-        return oldEntity.Id;
+        return oldEntity;
     }
 }
 public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity

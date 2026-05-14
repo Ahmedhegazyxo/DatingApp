@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Severity } from "../models/enums/severity";
 import { ToastView } from "../models/views/toast-view";
 import { ToasterService } from "./general/toaster-service";
+import { DialogProvider } from "./general/dialog-provider";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,9 @@ import { ToasterService } from "./general/toaster-service";
 export class AuthenticationStateService {
     public userModel = signal<UserModel | null>(null);
     protected expiresInMs: number | null = null;
-    constructor(protected router: Router, protected toasterService: ToasterService) {
+    constructor(protected router: Router,
+         protected toasterService: ToasterService,
+        private dialogService : DialogProvider) {
         this.userModel.set(this.getUserModelInfo());
         if (this.userModel() == null) {
             this.expiresInMs = 0;
@@ -30,6 +33,13 @@ export class AuthenticationStateService {
 
     public loginTriggered(userModel: UserModel): void {
         this.setUserModelInfo(userModel);
+          let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 3000);
+        this.toasterService.addToast(toast);
+        window.localStorage.setItem('userModel', JSON.stringify(userModel))
+        this.expiresInMs = new Date(userModel.expiresAt).getTime() - new Date().getTime();
+        setTimeout(() => {
+            this.tokenExpired();
+        }, this.expiresInMs);
         this.router.navigate(['/'])
     }
     public logoutTriggered() {
@@ -41,7 +51,6 @@ export class AuthenticationStateService {
     }
     public getUserModelInfo(): UserModel | null {
         let userModelString = window.localStorage.getItem('userModel');
-        console.log('local storage accessed');
         if (userModelString == null) {
             return null;
         }
@@ -52,15 +61,10 @@ export class AuthenticationStateService {
     }
     public setUserModelInfo(userModel: UserModel) {
         this.userModel.set(userModel);
-        let toast = new ToastView('Login', 'Logged in successfully', Severity.Success, 3000);
-        this.toasterService.addToast(toast);
-        window.localStorage.setItem('userModel', JSON.stringify(userModel))
-        this.expiresInMs = new Date(userModel.expiresAt).getTime() - new Date().getTime();
-        setTimeout(() => {
-            this.tokenExpired();
-        }, this.expiresInMs);
+        window.localStorage.setItem('userModel',JSON.stringify(userModel));
     }
     private tokenExpired() {
+        this.dialogService.dialogInstances.set([]);
         this.logoutTriggered();
     }
 }

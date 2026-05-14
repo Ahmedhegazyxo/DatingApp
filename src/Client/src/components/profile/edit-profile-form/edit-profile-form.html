@@ -4,8 +4,8 @@
             <label class="label">
                 <span class="label-text font-medium">Username</span>
             </label>
-            <input [(ngModel)]="profileModel.username" name="username" type="text" class="input input-bordered w-full"
-                placeholder="johndoe123" />
+            <input [(ngModel)]="updateProfileDto.username" name="username" type="text"
+                class="input input-bordered w-full" placeholder="johndoe123" />
         </div>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -13,15 +13,15 @@
                 <label class="label">
                     <span class="label-text font-medium">First name</span>
                 </label>
-                <input [(ngModel)]="profileModel.firstName" name="firstName" type="text" class="input input-bordered"
-                    placeholder="John" />
+                <input [(ngModel)]="updateProfileDto.firstName" name="firstName" type="text"
+                    class="input input-bordered" placeholder="John" />
             </div>
 
             <div class="form-control">
                 <label class="label">
                     <span class="label-text font-medium">Last name</span>
                 </label>
-                <input [(ngModel)]="profileModel.lastName" name="lastName" type="text" class="input input-bordered"
+                <input [(ngModel)]="updateProfileDto.lastName" name="lastName" type="text" class="input input-bordered"
                     placeholder="Doe" />
             </div>
         </div>
@@ -31,29 +31,46 @@
             <label class="label">
                 <span class="label-text font-medium">Phone number</span>
             </label>
-            <input [(ngModel)]="profileModel.phoneNumber" name="phoneNumber" type="tel"
+            <input [(ngModel)]="updateProfileDto.phoneNumber" name="phoneNumber" type="tel"
                 class="input input-bordered w-full" placeholder="+21100" />
         </div>
         <div class="form-control w-full">
             <label class="label">
                 <span class="label-text font-medium">Biography</span>
             </label>
-            <input [(ngModel)]="profileModel.biography" name="biography" type="text" class="input input-bordered w-full"
-                placeholder="Bio" />
+            <textarea [(ngModel)]="updateProfileDto.biography" name="biography" type="text"
+                class="textarea input-bordered w-full" placeholder="Bio">
+            </textarea>
         </div>
         <div class="form-control w-full">
             <label class="label">
                 <span class="label-text font-medium">Birthdate</span>
             </label>
-            <input [(ngModel)]="profileModel.birthdate" name="birthdate" type="date" class="input w-full"
-                placeholder="Birthdate" />
+            <input type="date" [(ngModel)]="updateProfileDto.birthdate" name="birthdate" class="input w-full" placeholder="Birthdate" />
+        </div>
+        <div class="form-control w-full">
+            <label>Gender</label>
+            <div class="flex gap-4">
+                <label class="flex items-center gap-1">
+                    <input type="radio" name="gender" [value]="0" [(ngModel)]="updateProfileDto.gender">
+                    Other
+                </label>
+                <label class="flex items-center gap-1">
+                    <input type="radio" name="gender" [value]="1" [(ngModel)]="updateProfileDto.gender">
+                    Male
+                </label>
+                <label class="flex items-center gap-1">
+                    <input type="radio" name="gender" [value]="2" [(ngModel)]="updateProfileDto.gender">
+                    Female
+                </label>
+            </div>
         </div>
 
         <div class="modal-action flex justify-end gap-3">
             <button type="reset" class="btn btn-ghost">
                 Reset
             </button>
-            <button type="submit" class="btn btn-info">
+            <button [disabled]="this.isFormDirty() == false" class="btn btn-info">
                 Save changes
             </button>
         </div>

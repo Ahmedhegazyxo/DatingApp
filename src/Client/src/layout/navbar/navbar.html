@@ -4,7 +4,7 @@
      rounded-l-full
       min-h-15 bg-linear-to-r
        from-primary
-        to-secondary
+        to-info
            text-white
            opacity-100
             text-2xl
@@ -39,12 +39,14 @@
         @if(authenticationStateService.userModel() != null)
         {
         <div class="flex items-center gap-4">
-            <button class="cursor-pointer avatar  rounded-full ring-2 p-3 bg-base-300" (click)="this.accessabilityService.toggleTheme()">
+            <button class="btn btn-ghost btn-circle transition-all duration-200 hover:bg-base-200 p-7
+            "
+                (click)="this.accessabilityService.toggleTheme()">
                 @if(this.accessabilityService.isDarkMode()){
-                    <i class="text-warning fa-regular fa-sun"></i>
+                <i class="fa-regular fa-lightbulb text-lg"></i>
                 }
                 @else {
-                    <i class="text-primary fa-regular fa-moon"></i>
+                <i class="fa-regular fa-moon text-lg"></i>
                 }
             </button>
             <app-avatar [userAbbreviation]="usernameAbbreviation()"></app-avatar>

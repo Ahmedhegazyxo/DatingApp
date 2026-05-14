@@ -12,7 +12,7 @@ import { Severity } from "../models/enums/severity";
     providedIn: 'root'
 })
 export class LoginService {
-    private readonly baseUri = 'http://localhost:5138/api/auth' 
+    private readonly baseUri = 'https://localhost:7111/api/auth' 
     private readonly loginUri = '/login' 
     constructor(private httpClient: HttpClient,
         private router: Router,

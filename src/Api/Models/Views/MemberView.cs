@@ -11,6 +11,7 @@ public class MemberView
     public DateTime Birthdate { get; set; }
     public Gender Gender { get; set; }
     public bool IsLikedBefore {get;set;}
+    public string? ProfilePhotoId {get;set;}
     public double Age => Math.Round((DateTime.UtcNow - Birthdate).TotalDays / 365 );
 
 }

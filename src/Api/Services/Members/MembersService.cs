@@ -16,8 +16,8 @@ public class MembersService : IMembersService
 
     public async Task<List<MemberView>> GetMatchesAsync(PaginationFilter? paginationFilter = null, CancellationToken cancellationToken = default)
     {
-       
-       Guid CurrentUserId = new Guid($"{_userClaimsService.ClaimsPrincipal!.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
+
+        Guid CurrentUserId = new Guid($"{_userClaimsService.ClaimsPrincipal!.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
         return await _profileRepository.ReadAsResultAsNoTracking(paginationFilter,
          e => new MemberView
          {
@@ -44,6 +44,7 @@ public class MembersService : IMembersService
              FirstName = e.FirstName,
              LastName = e.LastName,
              Gender = e.Gender,
+             ProfilePhotoId = e.ProfilePhoto == null ? null : e.ProfilePhoto!.AttachmentId.ToString(),
              IsLikedBefore = e.LikesReceived.Any(e => e.CreatorId == CurrentUserId)
          }, cancellationToken, e => e.Id != CurrentUserId
         );

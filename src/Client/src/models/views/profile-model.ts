@@ -9,5 +9,6 @@ export class ProfileModel {
     public age : number = 0;
     public gender : Gender = Gender.other;
     public email : string = '';
-    public bigoraphy : string = '';
+    public biography : string = '';
+    public profilePhotoId : string | null = null;
 }

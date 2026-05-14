@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
     }
 )
 export class RegisterationService {
-    private readonly baseUri = 'http://localhost:5138/api/auth'
+    private readonly baseUri = 'https://localhost:7111/api/auth'
     private readonly registerUri = '/register'
     constructor(private _httpClient: HttpClient,
         private _authenticationStateService: AuthenticationStateService,

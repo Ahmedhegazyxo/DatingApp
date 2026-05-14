@@ -1,6 +1,6 @@
 <div class="{{getCardClass()}} bg-base-100 hover:bg-base-200">
     <div class="card-title flex justify-between min-h-10">
-        <div >
+        <div>
             {{memberModel.firstName}} {{memberModel.lastName}}
         </div>
         <div>
@@ -27,6 +27,10 @@
 
     </div>
     <div class="card-body">
-        <img src="{{getImageSource()}}" class="max-h-50 max-w-50" />
+        <div class="avatar avatar-placeholder rounded-full w-40 relative">
+            <div class="rounded-full">
+                <img src="{{getImageSource()}}" class="max-h-50 max-w-50" />
+            </div>
+        </div>
     </div>
 </div>

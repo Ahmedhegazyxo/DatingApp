@@ -9,5 +9,6 @@ export class MemberModel {
     public lastName: string = '';
     public gender: Gender = Gender.other;
     public age : number = 0;
-    public isLikedBefore : boolean = false
+    public isLikedBefore : boolean = false;
+    public profilePhotoId : string | null = null;
 }

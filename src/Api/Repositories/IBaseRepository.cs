@@ -4,7 +4,7 @@ using Api.Helpers;
 public interface IBaseRepository<TEntity,TId> where TEntity : BaseEntity<TId> where TId : IEquatable<TId>
 {
     Task<TId> CreateAsync(TEntity entity, CancellationToken cancellationToken = default!);
-    Task<TId> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default!);
+    Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default!);
     Task<TId> DeleteAsync(TId id, CancellationToken cancellationToken = default!);
     Task<bool> ExistsAsync(Expression<Func<TEntity,bool>> predicate, CancellationToken cancellationToken = default!);
     Task<TEntity?> ReadyByIdAsync(TId id, CancellationToken cancellationToken = default!, bool throwIfNull = true);

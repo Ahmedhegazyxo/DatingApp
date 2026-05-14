@@ -1,15 +1,14 @@
 import { Component, Injectable, signal, Type } from '@angular/core';
-import { DialogInstanceView } from '../../models/views/dialog-instance-view';
+import { ComponentInputOutputContract, DialogInstanceView } from '../../models/views/dialog-instance-view';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DialogProvider {
-  public target: EventTarget = new EventTarget();
   public dialogInstances = signal<Array<DialogInstanceView>>([]);
-  public open(title: string, cancelCallback: (dialogInstance: DialogInstanceView) => void, component?: Type<any>): DialogInstanceView {
-    var instance = new DialogInstanceView(this.randomString(), title, cancelCallback, component);
-    this.dialogInstances.update(list => [...list,instance]);
+  public open(title: string, cancelCallback: (dialogInstance: DialogInstanceView) => void, component?: Type<any>, inputOutputData?: Array<ComponentInputOutputContract>): DialogInstanceView {
+    var instance = new DialogInstanceView(this.randomString(), title, cancelCallback, component, inputOutputData);
+    this.dialogInstances.update(list => [...list, instance]);
     return instance;
   }
   public close(id: string) {

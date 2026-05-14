@@ -1,10 +1,14 @@
-<div>
-    <app-navbar></app-navbar>
-    <app-loading-state-provider></app-loading-state-provider>
-    <app-toaster-provider></app-toaster-provider>
-    <app-exception-handler-provider></app-exception-handler-provider>
-    <app-dialogs></app-dialogs>
+<div (dragover)="onDragOver($event)" class="flex flex-col min-h-screen">
+    <div>
+        <app-navbar></app-navbar>
+        <app-loading-state-provider></app-loading-state-provider>
+        <app-toaster-provider></app-toaster-provider>
+        <app-exception-handler-provider></app-exception-handler-provider>
+        <app-dialogs></app-dialogs>
+    </div>
+    <div class="pt-30 sm:px-10 flex-1">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<div class="pt-30 sm:px-10">
-    <router-outlet> </router-outlet>
-</div>
+
+<app-footer></app-footer>

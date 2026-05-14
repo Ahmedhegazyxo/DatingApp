@@ -1,0 +1,11 @@
+<form #editForm="ngForm" (ngSubmit)="onValidSubmitAction()">
+
+    <div class="flex justify-center items-center w-full relative">
+        <input type="file" id="profileFile" class="hidden" accept="image/*" (change)="previewImage($event)" />
+
+        <label for="profileFile" class="cursor-pointer">
+            <img src="{{ this.imgSrc() }}" id="profile-image" class="w-48 h-48 rounded-full object-cover" />
+        </label>
+    </div>
+    <button type="submit" class="btn btn-info" [disabled]="this.file == null">Upload</button>
+</form>

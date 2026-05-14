@@ -14,6 +14,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfiguration(new UserConfigurations());
         modelBuilder.ApplyConfiguration(new ProfileLikeConfigurations());
         modelBuilder.ApplyConfiguration(new ProfileMatchConfigurations());
+        modelBuilder.ApplyConfiguration(new ProfilePhotoConfigurations());
+        modelBuilder.ApplyConfiguration(new AttachmentConfigurations());
         base.OnModelCreating(modelBuilder);
     }
 }

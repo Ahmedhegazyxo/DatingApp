@@ -12,7 +12,7 @@ import { Severity } from "../models/enums/severity";
 export class MembersService {
     private members = signal<Array<MemberModel> | null>(null);
     public readonly _members = this.members.asReadonly();
-    private URI: string = 'http://localhost:5138/api/members';
+    private URI: string = 'https://localhost:7111/api/members';
     private LikeUri: string = '/likeOrMatch/';
     constructor(private httpClient: HttpClient, private toasterService: ToasterService) { }
     public loadMembers(): void {

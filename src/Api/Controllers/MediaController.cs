@@ -1,4 +1,6 @@
 using System.IO.Compression;
+using Api.Helpers;
+using Api.Repositories;
 
 namespace Api.Controllers;
 
@@ -6,15 +8,28 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 public class MediaController : ControllerBase
 {
-    [HttpPost("Upload")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Upload(IFormFile file)
+    private readonly IFileService _fileService;
+    private readonly IAttachmentRepository _attachmentRepository;
+    public MediaController(IFileService fileService,
+     IAttachmentRepository attachmentRepository)
     {
-        string fileName= Path.ChangeExtension(file.FileName, ".gz");
-        await using FileStream writeStream = System.IO.File.Create(fileName);
-        await using Stream readStream = file.OpenReadStream();
-        await using GZipStream gzipStream = new GZipStream(writeStream, CompressionMode.Compress);
-        await readStream.CopyToAsync(gzipStream);
-        return Ok(new {FilePath = fileName, Accepted = true});
+        _fileService = fileService;
+        _attachmentRepository = attachmentRepository;
+    }
+    [AllowAnonymous]
+    [HttpGet("download/{attachmentId}")]
+    public async Task<IActionResult> Download(Guid attachmentId, CancellationToken cancellationToken = default!)
+    {
+        Attachment? attachment = await _attachmentRepository.ReadyByIdAsyncAsNoTracking(attachmentId, cancellationToken);
+        FileData? fileData = _fileService.RetreiveFile(new FileMetaData
+        {
+            FileName = attachment!.FileName,
+            FileExtension = attachment.FileExtension.StartsWith(".")? attachment.FileExtension : "." + attachment.FileExtension,
+            FileRootPath = attachment.RootPath
+        });
+        if (fileData != null)
+            return PhysicalFile(fileData.FileFullPath, fileData.ContentType, enableRangeProcessing: true);
+        else
+            return NotFound("File Not Found");
     }
 }

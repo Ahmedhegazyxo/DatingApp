@@ -25,8 +25,8 @@ public class User : BaseEntity<Guid>
         return new User
         {
             Birthdate = birthdate,
-            Username = username,
-            Email = email,
+            Username = username.ToLower(),
+            Email = email.ToLower(),
             HashPassword = hashPassword,
             HashSalt = hashSalt,
             PhoneNumber = phoneNumber,

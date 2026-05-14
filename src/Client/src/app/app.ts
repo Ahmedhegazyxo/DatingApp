@@ -8,9 +8,10 @@ import { ExceptionHandlerProvider } from '../components/general/exception-handle
 import { ToasterProvider } from "../components/general/toaster-provider/toaster-provider";
 import { AcessabilityService } from '../services/general/acessability-service';
 import { Dialogs } from "../components/general/dialogs/dialogs";
+import { Footer } from "../components/layout/footer/footer";
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, LoadingStateProvider, ExceptionHandlerProvider, ToasterProvider, Dialogs],
+  imports: [RouterOutlet, Navbar, LoadingStateProvider, ExceptionHandlerProvider, ToasterProvider, Dialogs, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -22,12 +23,19 @@ export class App implements OnInit {
   ngOnInit(): void {
     this.setUp();
   }
+  protected onDragOver(e: DragEvent) {
+    e.preventDefault();
+  }
 
   private setUp(): void {
     var theme = localStorage.getItem('data-theme');
     if (theme == null) {
       this.acessabilityService.isDarkMode.set(false);
       document.documentElement.setAttribute('data-theme', 'light');
+    }
+    else if (theme == 'light') {
+      this.acessabilityService.isDarkMode.set(false);
+      document.documentElement.setAttribute('data-theme', theme);
     }
     else {
       this.acessabilityService.isDarkMode.set(true);

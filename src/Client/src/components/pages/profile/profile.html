@@ -1,7 +1,15 @@
 <div class="flex flex-wrap justify-center py-4">
   <div class="card p-10 border-2 border-neutral bg-base-200">
-    <div class="avatar ring-1  rounded-full w-40">
-      <img src="/assets/logo/unknown.png" class="opacity-50" />
+    <div class="avatar avatar-placeholder rounded-full w-40 relative">
+      <div class="rounded-full">
+        <img src="{{getImageSource()}}" alt="Profile picture" 
+          onerror="this.onerror=null; this.src='/assets/logo/unknown.png';" />
+
+        <button class="btn btn-circle btn-sm absolute bottom-2 right-2 bg-base-200 hover:bg-base-300 shadow"
+          (click)="onEditProfilePicture()" aria-label="Edit profile picture">
+          <i class="fa fa-pen"></i>
+        </button>
+      </div>
     </div>
     <div class="my-2">
       <span class="text-2xl mx-2">{{this.profileService.profileModel()?.firstName}}
@@ -21,11 +29,11 @@
     <div class="mx-2">
       <span class="text-gray-400">{{this.profileService.profileModel()?.birthdate | date}}</span>
     </div>
-    <div class="mx-2 card card-border border-gray-400">
-      <span class="text-gray-400">{{this.profileService.profileModel()?.bigoraphy}}</span>
+    <div class="mx-2 card card-border">
+      <span class="text-gray-400">{{this.profileService.profileModel()?.biography}}</span>
     </div>
     <div class="my-2 flex justify-end">
-      <button class="btn btn-info" (click)="editbuttonClicked()"><i class="fa fa-pen" ></i></button>
+      <button class="btn btn-primary" (click)="editbuttonClicked()"><i class="fa fa-pen"></i></button>
     </div>
   </div>
   <div class="flex-1 min-h-full flex flex-col gap-4.5 justify-between ">

@@ -1,9 +1,9 @@
-export interface UserModel 
+export class UserModel 
 {
-    username : string;
-    firstName : string;
-    lastName : string;
-    token : string;
-    expiresAt : string;
-    
+    username : string = '';
+    firstName : string = '';
+    lastName : string = '';
+    token : string = '';
+    expiresAt : string = '';
+   
 }

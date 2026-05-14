@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { ProfileModel } from '../models/views/profile-model';
 import { UpdateProfileDto } from '../models/dtos/update-profile-dto';
 import { AuthenticationStateService } from './authentication-state-service';
+import { Observable, timeInterval } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  private baseUri = 'http://localhost:5138/api/profile'
+  private baseUri = 'https://localhost:7111/api/profile'
   public profileModel = signal<ProfileModel | null>(null);
   constructor(private httpClient: HttpClient
     , private authStateService: AuthenticationStateService
@@ -18,22 +19,16 @@ export class ProfileService {
   public getProfileInfo() {
     this.httpClient.get<ProfileModel>(this.baseUri).subscribe({
       next: (value) => {
-        console.log(value)
         this.profileModel.set(value);
-        var userModel = this.authStateService.getUserModelInfo();
-        console.log(userModel);
-        if (userModel != null) userModel.username = value.username;
-        console.log(value);
-        this.authStateService.setUserModelInfo(userModel!)
-        console.log(userModel);
       }
     });
   }
-  public updateProfileBasicInfo(model: UpdateProfileDto) {
-    this.httpClient.put<string>(this.baseUri, model).subscribe({
-      next: () => {
-        this.getProfileInfo();
-      }
-    });
+  public updateProfileBasicInfo(model: UpdateProfileDto): Observable<ProfileModel> {
+    return this.httpClient.put<ProfileModel>(this.baseUri, model);
+  }
+  public updateProfilePhoto(file: File) {
+    const formData = new FormData()
+    formData.append('formFile', file);
+    return this.httpClient.put<any>(this.baseUri + '/photo',formData)
   }
 }

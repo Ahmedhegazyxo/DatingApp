@@ -15,7 +15,7 @@ export class MemberCard {
   }
   onMemberCardClicked = output<MemberModel>();
   @Input() public memberModel: MemberModel = new MemberModel();
-  
+
   protected getCardClass(): string {
     switch (this.memberModel.gender) {
       case Gender.male: return "min-h-80 border-primary card  p-4  min-h-64 min-w-48 border-3   ";
@@ -24,11 +24,10 @@ export class MemberCard {
     }
   }
   protected getImageSource(): string {
-    switch (this.memberModel.gender) {
-      case Gender.male: return "assets/logo/unknown.png";
-      case Gender.female: return "assets/logo/unknown.png";
-      case Gender.other: return "assets/logo/unknown.png";
-    }
+    if (this.memberModel.profilePhotoId)
+      return "https://localhost:7111/api/media/download/" + this.memberModel.profilePhotoId
+    else
+      return "assets/logo/unknown.png"
   }
   protected likeUser() {
     this.onMemberCardClicked.emit(this.memberModel);

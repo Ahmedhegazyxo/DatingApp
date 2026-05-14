@@ -21,6 +21,40 @@ namespace Api.Migrations
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true);
 
+            modelBuilder.Entity("Api.Entities.Attachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AttachmentType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FileExtension")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastModificationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RootPath")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attachments", (string)null);
+                });
+
             modelBuilder.Entity("Api.Entities.Profile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -104,6 +138,33 @@ namespace Api.Migrations
                     b.HasIndex("ReceptorProfileId");
 
                     b.ToTable("ProfileMatches", (string)null);
+                });
+
+            modelBuilder.Entity("Api.Entities.ProfilePhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AttachmentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastModificationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ProfileId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttachmentId")
+                        .IsUnique();
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("ProfilePhotos", (string)null);
                 });
 
             modelBuilder.Entity("Api.Entities.ProfilePreference", b =>
@@ -226,6 +287,29 @@ namespace Api.Migrations
                     b.Navigation("ReceptorProfile");
                 });
 
+            modelBuilder.Entity("Api.Entities.ProfilePhoto", b =>
+                {
+                    b.HasOne("Api.Entities.Attachment", "Attachment")
+                        .WithMany()
+                        .HasForeignKey("AttachmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Entities.Profile", null)
+                        .WithOne("ProfilePhoto")
+                        .HasForeignKey("Api.Entities.ProfilePhoto", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.Entities.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId");
+
+                    b.Navigation("Attachment");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Api.Entities.ProfilePreference", b =>
                 {
                     b.HasOne("Api.Entities.Profile", "Profile")
@@ -257,6 +341,8 @@ namespace Api.Migrations
                     b.Navigation("MatchesReceived");
 
                     b.Navigation("MatchesSent");
+
+                    b.Navigation("ProfilePhoto");
 
                     b.Navigation("ProfilePreference");
 
