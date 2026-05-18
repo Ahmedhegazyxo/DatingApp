@@ -1,0 +1,60 @@
+@if(show){
+
+@if(control()?.hasError('required')){
+<div class="text-xs text-error">
+  {{label()}} is required.
+</div>
+}
+
+@if(control()?.hasError('email')){
+<div class="text-xs text-error">
+  Please enter a valid email address.
+</div>
+}
+
+@if(control()?.hasError('minlength')){
+<div class="text-xs text-error">
+  {{label()}} must be at least
+  {{control()?.getError('minlength')?.requiredLength}} characters.
+</div>
+}
+
+@if(control()?.hasError('maxlength')){
+<div class="text-xs text-error">
+  {{label()}} must be at most
+  {{control()?.getError('maxlength')?.requiredLength}} characters.
+</div>
+}
+
+@if(control()?.hasError('min')){
+<div class="text-xs text-error">
+  Minimum value is
+  {{control()?.getError('min')?.min}}.
+</div>
+}
+
+@if(control()?.hasError('max')){
+<div class="text-xs text-error">
+  Maximum value is
+  {{control()?.getError('max')?.max}}.
+</div>
+}
+
+@if(control()?.hasError('pattern')){
+<div class="text-xs text-error">
+  Invalid format.
+</div>
+}
+
+@if(control()?.hasError('requiredTrue')){
+<div class="text-xs text-error">
+  You must accept this field.
+</div>
+}
+@if(control()?.hasError('passwordMismatch')){
+<div class="text-xs text-error">
+  Password Mismatch
+</div>
+}
+
+}

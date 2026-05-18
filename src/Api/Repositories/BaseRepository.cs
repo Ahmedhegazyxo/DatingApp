@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using Api.Helpers;
-using SQLitePCL;
 
 namespace Api.Repositories;
 
@@ -18,6 +17,15 @@ public class BaseRepository<TEntity, TId> : IBaseRepository<TEntity, TId> where 
         await _context.SaveChangesAsync(cancellationToken);
         return entry.Entity.Id;
     }
+    public async Task<TEntity> UpdateAsync(TEntity entity,
+     CancellationToken cancellationToken = default!)
+    {
+        TEntity oldEntity = await _context.Set<TEntity>().FirstAsync(e => e.Id.Equals(entity.Id), cancellationToken);
+        oldEntity = entity;
+        _context.Set<TEntity>().Update(oldEntity);
+        await _context.SaveChangesAsync(cancellationToken);
+        return oldEntity;
+    }
     public async Task<TId> DeleteAsync(TId id,
      CancellationToken cancellationToken = default!)
     {
@@ -29,127 +37,93 @@ public class BaseRepository<TEntity, TId> : IBaseRepository<TEntity, TId> where 
 
     public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<TEntity>().AsNoTracking().AnyAsync(predicate,cancellationToken);
-    }
-    public async Task<List<TEntity>> Read(PaginationFilter? paginationFilter,
-     CancellationToken cancellationToken,
-      Expression<Func<TEntity, bool>>? predicate = null)
-    {
-
-        predicate ??= e => true;
-        if (paginationFilter is not null)
-            return await _context.Set<TEntity>()
-            .Where(predicate)
-            .Skip((paginationFilter.PageSize - paginationFilter.PageSize) * paginationFilter.PageSize)
-            .Take(paginationFilter.PageNumber)
-            .ToListAsync(cancellationToken);
-        else
-        {
-            return await _context.Set<TEntity>()
-            .Where(predicate)
-            .ToListAsync(cancellationToken);
-        }
+        return await _context.Set<TEntity>().AsNoTracking().AnyAsync(predicate, cancellationToken);
     }
 
-    public async Task<List<TEntity>> ReadAsNoTracking(PaginationFilter?
-     paginationFilter, CancellationToken cancellationToken = default!,
-      Expression<Func<TEntity, bool>>? predicate = null)
+    public async Task<TEntity?> ReadyByIdAsync(TId id, CancellationToken cancellationToken = default, bool throwIfNull = true)
     {
-        predicate ??= e => true;
-        if (paginationFilter is not null)
-            return await _context.Set<TEntity>()
-            .Where(predicate)
-            .Skip((paginationFilter.PageSize - paginationFilter.PageSize) * paginationFilter.PageSize)
-            .Take(paginationFilter.PageNumber).AsNoTracking().ToListAsync(cancellationToken);
-        else
-        {
-            return await _context.Set<TEntity>().AsNoTracking()
-            .Where(predicate)
-            .ToListAsync(cancellationToken);
-        }
-    }
-
-    public Task<List<TEntity>> ReadAsNoTracking(PaginationFilter? paginationFilter, CancellationToken cancellationToken = default, Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<List<TResult>> ReadAsResult<TResult>(PaginationFilter? paginationFilter,
-        Expression<Func<TEntity, TResult>> resultExpression,
-        CancellationToken cancellationToken = default!,
-        Expression<Func<TEntity, bool>>? predicate = default)
-    {
-        predicate ??= e => true;
-        if (paginationFilter is not null)
-        {
-            return await _context.Set<TEntity>()
-            .Where(predicate)
-            .Skip((paginationFilter.PageNumber - paginationFilter.PageNumber) * paginationFilter.PageNumber)
-            .Take(paginationFilter.PageSize)
-            .Select(resultExpression)
-            .ToListAsync(cancellationToken);
-        }
-        else
-        {
-            return await _context.Set<TEntity>()
-            .Where(predicate)
-            .Select(resultExpression).ToListAsync(cancellationToken);
-        }
-    }
-
-    public async Task<List<TResult>> ReadAsResultAsNoTracking<TResult>(PaginationFilter? paginationFilter,
-      Expression<Func<TEntity, TResult>> resultExpresion,
-     CancellationToken cancellationToken = default!,
-       Expression<Func<TEntity, bool>>? predicate = null)
-    {
-        predicate ??= e => true;
-        if (paginationFilter is not null)
-        {
-            return await _context.Set<TEntity>()
-            .AsNoTracking()
-            .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageNumber)
-            .Take(paginationFilter.PageSize)
-            .Where(predicate)
-            .Select(resultExpresion)
-            .ToListAsync(cancellationToken);
-        }
-        else
-        {
-            return await _context.Set<TEntity>()
-            .AsNoTracking()
-            .Where(predicate)
-            .Select(resultExpresion).ToListAsync(cancellationToken);
-        }
-    }
-
-    public async Task<TEntity?> ReadyByIdAsync(TId id,
-     CancellationToken cancellationToken = default!,
-      bool throwIfNull = true)
-    {
-        if (throwIfNull)
-            return await _context.Set<TEntity>().FirstAsync(e => e.Id.Equals(id), cancellationToken);
-        else
+        if (!throwIfNull)
             return await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
-    }
-
-    public async Task<TEntity?> ReadyByIdAsyncAsNoTracking(TId id,
-     CancellationToken cancellationToken = default!,
-      bool throwIfNull = true)
-    {
-        if (throwIfNull)
-            return await _context.Set<TEntity>().AsNoTracking().FirstAsync(e => e.Id.Equals(id), cancellationToken);
         else
-            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
+            return await _context.Set<TEntity>().FirstAsync(e => e.Id.Equals(id), cancellationToken);
     }
 
-    public async Task<TEntity> UpdateAsync(TEntity entity,
-     CancellationToken cancellationToken = default!)
+    public async Task<TEntity?> ReadyByIdAsyncAsNoTracking(TId id, CancellationToken cancellationToken = default, bool throwIfNull = true)
     {
-        TEntity oldEntity = await _context.Set<TEntity>().FirstAsync(e => e.Id.Equals(entity.Id), cancellationToken);
-        oldEntity = entity;
-        _context.Set<TEntity>().Update(oldEntity);
-        await _context.SaveChangesAsync(cancellationToken);
-        return oldEntity;
+        if (!throwIfNull)
+            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
+        else
+            return await _context.Set<TEntity>().AsNoTracking().FirstAsync(e => e.Id.Equals(id), cancellationToken);
+    }
+
+    public async Task<List<TEntity>> Read(CancellationToken cancellationToken = default, Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        predicate ??= e => true;
+        return await _context.Set<TEntity>()
+        .Where(predicate)
+        .ToListAsync(cancellationToken);
+    }
+    public async Task<PaginatedResult<TEntity>> Read(PaginationFilter paginationFilter, CancellationToken cancellationToken = default, Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        predicate ??= e => true;
+        IQueryable<TEntity> query = _context.Set<TEntity>()
+        .AsNoTracking()
+        .Where(predicate);
+        return new PaginatedResult<TEntity>
+        {
+            PageNumber = paginationFilter.PageNumber,
+            PageSize = paginationFilter.PageSize,
+            TotalCount = await query.CountAsync(),
+            Body = await query
+            .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
+            .Take(paginationFilter.PageSize)
+            .ToListAsync(cancellationToken)
+        };
+    }
+
+    public async Task<List<TEntity>> ReadAsNoTracking(CancellationToken cancellationToken = default, Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default)
+    {
+        predicate ??= e => true;
+        return await _context.Set<TEntity>()
+        .AsNoTracking()
+        .Where(predicate)
+        .ToListAsync(cancellationToken);
+    }
+    public async Task<PaginatedResult<TEntity>> ReadAsNoTracking(PaginationFilter paginationFilter, CancellationToken cancellationToken = default, Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default)
+    {
+        predicate ??= e => true;
+        var query = _context.Set<TEntity>()
+       .AsNoTracking()
+       .Where(predicate);
+
+        return new PaginatedResult<TEntity>
+        {
+            TotalCount = await query.CountAsync(cancellationToken),
+            PageNumber = paginationFilter.PageNumber,
+            PageSize = paginationFilter.PageSize,
+            Body = await query.Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
+            .Take(paginationFilter.PageSize).ToListAsync(cancellationToken)
+        };
+    }
+
+    public async Task<PaginatedResult<TResult>> ReadAsResult<TResult>(PaginationFilter paginationFilter, Expression<Func<TEntity, TResult>> resultExpression, CancellationToken cancellationToken = default, Expression<Func<TEntity, bool>>? predicate = null) where TResult : class
+    {
+        predicate ??= e => true;
+        var query = _context.Set<TEntity>()
+        .AsNoTracking()
+        .Where(predicate)
+        .Select(resultExpression);
+        return new PaginatedResult<TResult>
+        {
+            PageNumber = paginationFilter.PageNumber,
+            PageSize = paginationFilter.PageSize,
+            TotalCount = await query.CountAsync(cancellationToken),
+            Body = await query
+            .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
+            .Take(paginationFilter.PageSize)
+            .ToListAsync(cancellationToken),
+        };
+
     }
 }
 public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
@@ -173,46 +147,39 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         return id;
     }
 
-    public async Task<List<TEntity>> Read(PaginationFilter? paginationFilter, CancellationToken cancellationToken)
+    public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        if (paginationFilter is not null)
-            return await _context.Set<TEntity>()
-            .Skip((paginationFilter.PageSize - paginationFilter.PageSize) * paginationFilter.PageSize)
-            .Take(paginationFilter.PageNumber).ToListAsync(cancellationToken);
-        else
-        {
-            return await _context.Set<TEntity>()
-            .ToListAsync(cancellationToken);
-        }
+        return await _context.Set<TEntity>().AsNoTracking().AnyAsync(predicate, cancellationToken);
     }
 
-    public async Task<List<TEntity>> ReadAsNoTracking(PaginationFilter? paginationFilter, CancellationToken cancellationToken)
+    public Task<List<TEntity>> Read(PaginationFilter? paginationFilter, CancellationToken cancellationToken = default)
     {
-        if (paginationFilter is not null)
-            return await _context.Set<TEntity>()
-            .Skip((paginationFilter.PageSize - paginationFilter.PageSize) * paginationFilter.PageSize)
-            .Take(paginationFilter.PageNumber).AsNoTracking().ToListAsync(cancellationToken);
-        else
-        {
-            return await _context.Set<TEntity>().AsNoTracking()
-            .ToListAsync(cancellationToken);
-        }
+        throw new NotImplementedException();
     }
 
-    public async Task<TEntity?> ReadyByIdAsync(int id, CancellationToken cancellationToken, bool throwIfNull = true)
+    public Task<List<TEntity>> ReadAsNoTracking(PaginationFilter? paginationFilter, CancellationToken cancellationToken = default)
     {
-        if (throwIfNull)
-            return await _context.Set<TEntity>().FirstAsync(e => e.Id.Equals(id), cancellationToken);
-        else
-            return await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
+        throw new NotImplementedException();
     }
 
-    public async Task<TEntity?> ReadyByIdAsyncAsNoTracking(int id, CancellationToken cancellationToken, bool throwIfNull = true)
+    public Task<List<TResult>> ReadAsResult<TResult>(PaginationFilter? paginationFilter, Expression<Func<TEntity, TResult>> selector, Func<TEntity, bool>? predicate, CancellationToken cancellationToken = default)
     {
-        if (throwIfNull)
-            return await _context.Set<TEntity>().AsNoTracking().FirstAsync(e => e.Id.Equals(id), cancellationToken);
-        else
-            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
+        throw new NotImplementedException();
+    }
+
+    public Task<List<TResult>> ReadAsResultAsNoTracking<TResult>(PaginationFilter? paginationFilter, Expression<Func<TEntity, TResult>> selector, Func<TEntity, bool>? predicate, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TEntity?> ReadyByIdAsync(int id, CancellationToken cancellationToken, bool throwIfNull = true)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TEntity?> ReadyByIdAsyncAsNoTracking(int id, CancellationToken cancellationToken, bool throwIfNull = true)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<int> UpdateAsync(TEntity entity, CancellationToken cancellationToken)

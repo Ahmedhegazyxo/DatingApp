@@ -1,0 +1,9 @@
+<label class="floating-label">
+    <span>{{label()}}</span>
+    <textarea  class="{{inputClass()}} p-2 textarea" placeholder="{{placeholder()}}" value="{{control.value}}"
+        [class.input-error]="control.invalid && control.touched" [class.input-success]="!control.invalid && control.touched"
+        [formControl]="control"
+        rows="5">
+    </textarea>
+    <app-validation-hints label="{{label()}}" [control]="control" />
+</label>

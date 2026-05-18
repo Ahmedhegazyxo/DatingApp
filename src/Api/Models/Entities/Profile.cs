@@ -20,7 +20,7 @@ public class Profile : BaseEntity<Guid>
 
     public static Profile Create(string firstName, string lastName, Gender gender)
     {
-        Gender preferredGender = Gender.Other;
+        Gender preferredGender = Gender.Female;
         if (gender == Gender.Male) preferredGender = Gender.Female;
         if (gender == Gender.Female) preferredGender = Gender.Male;
         return new Profile

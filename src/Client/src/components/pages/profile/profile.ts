@@ -1,14 +1,10 @@
 import { AfterViewInit, Component, computed, Inject, signal, ViewChild } from '@angular/core';
 import { ProfileService } from '../../../services/profile-service';
 import { ProfilePreferences } from "../../profile/profile-preferences/profile-preferences";
-import { DatePipe } from '@angular/common';
-import { UpdateProfileDto } from '../../../models/dtos/update-profile-dto';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { DialogProvider } from '../../../services/general/dialog-provider';
 import { EditProfileForm } from '../../profile/edit-profile-form/edit-profile-form';
-import { ProfileModel } from '../../../models/views/profile-model';
 import { ComponentContractType } from '../../../models/enums/component-contract-type';
-import { Avatar } from '../../../layout/avatar/avatar';
-import { ToasterProvider } from '../../general/toaster-provider/toaster-provider';
 import { ToasterService } from '../../../services/general/toaster-service';
 import { ToastView } from '../../../models/views/toast-view';
 import { Severity } from '../../../models/enums/severity';

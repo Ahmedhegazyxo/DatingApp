@@ -1,76 +1,55 @@
 <div>
-    <form #editForm="ngForm" (ngSubmit)="editProfileSubmitted()" class="space-y-6">
+    <form [formGroup]="editForm" (ngSubmit)="editProfileSubmitted()" class="space-y-6">
         <div class="form-control w-full">
-            <label class="label">
-                <span class="label-text font-medium">Username</span>
-            </label>
-            <input [(ngModel)]="updateProfileDto.username" name="username" type="text"
-                class="input input-bordered w-full" placeholder="johndoe123" />
+            <app-text-input type="text" label="Username" formControlName="username" placeholder="Username"
+                inputClass="input w-full"></app-text-input>
         </div>
-
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class="form-control">
-                <label class="label">
-                    <span class="label-text font-medium">First name</span>
-                </label>
-                <input [(ngModel)]="updateProfileDto.firstName" name="firstName" type="text"
-                    class="input input-bordered" placeholder="John" />
+                <app-text-input type="text" label="First Name" formControlName="firstName" placeholder="First Name"
+                    inputClass="input w-full"></app-text-input>
             </div>
-
             <div class="form-control">
-                <label class="label">
-                    <span class="label-text font-medium">Last name</span>
-                </label>
-                <input [(ngModel)]="updateProfileDto.lastName" name="lastName" type="text" class="input input-bordered"
-                    placeholder="Doe" />
+                <app-text-input type="text" label="Last Name" formControlName="lastName" placeholder="Last Name"
+                    inputClass="input w-full"></app-text-input>
             </div>
         </div>
+        <div class="form-control w-full">
+            <app-phone-number-input label="Phone Number" formControlName="phoneNumber" placeholder="Phone Number"
+                inputClass="input w-full"></app-phone-number-input>
+        </div>
+        <div class="form-control w-full">
+            <app-text-area-input label="Biography" type="text" formControlName="biography" placeholder="Biography"
+                inputClass="input w-full" />
+        </div>
 
-        <!-- Phone -->
         <div class="form-control w-full">
-            <label class="label">
-                <span class="label-text font-medium">Phone number</span>
-            </label>
-            <input [(ngModel)]="updateProfileDto.phoneNumber" name="phoneNumber" type="tel"
-                class="input input-bordered w-full" placeholder="+21100" />
-        </div>
-        <div class="form-control w-full">
-            <label class="label">
-                <span class="label-text font-medium">Biography</span>
-            </label>
-            <textarea [(ngModel)]="updateProfileDto.biography" name="biography" type="text"
-                class="textarea input-bordered w-full" placeholder="Bio">
-            </textarea>
-        </div>
-        <div class="form-control w-full">
-            <label class="label">
+            <label class="floating-label">
                 <span class="label-text font-medium">Birthdate</span>
+                <input type="date" formControlName="birthdate" name="birthdate" class="input w-full"
+                    placeholder="Birthdate" />
             </label>
-            <input type="date" [(ngModel)]="updateProfileDto.birthdate" name="birthdate" class="input w-full" placeholder="Birthdate" />
+        </div>
+        <div class="form-control w-full">
         </div>
         <div class="form-control w-full">
             <label>Gender</label>
             <div class="flex gap-4">
                 <label class="flex items-center gap-1">
-                    <input type="radio" name="gender" [value]="0" [(ngModel)]="updateProfileDto.gender">
-                    Other
-                </label>
-                <label class="flex items-center gap-1">
-                    <input type="radio" name="gender" [value]="1" [(ngModel)]="updateProfileDto.gender">
+                    <input type="radio" name="gender" [value]="1" formControlName="gender">
                     Male
                 </label>
                 <label class="flex items-center gap-1">
-                    <input type="radio" name="gender" [value]="2" [(ngModel)]="updateProfileDto.gender">
+                    <input type="radio" name="gender" [value]="2" formControlName="gender">
                     Female
                 </label>
             </div>
         </div>
-
         <div class="modal-action flex justify-end gap-3">
             <button type="reset" class="btn btn-ghost">
                 Reset
             </button>
-            <button [disabled]="this.isFormDirty() == false" class="btn btn-info">
+            <button [disabled]="!this.editForm.dirty || this.editForm.invalid" class="btn btn-primary">
                 Save changes
             </button>
         </div>

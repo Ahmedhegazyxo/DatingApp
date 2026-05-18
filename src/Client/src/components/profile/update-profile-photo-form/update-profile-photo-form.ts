@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { ProfileService } from '../../../services/profile-service';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-update-profile-photo-form',
-  imports: [FormsModule],
+  imports: [FormsModule,ReactiveFormsModule],
   templateUrl: './update-profile-photo-form.html',
   styleUrl: './update-profile-photo-form.css',
 })
-export class UpdateProfilePhotoForm implements AfterViewInit {
+export class UpdateProfilePhotoForm implements OnInit {
   @ViewChild('editForm') protected editForm?: NgForm;
   @ViewChild('profileCanvas') profileCanvas!: ElementRef<HTMLCanvasElement>
   protected file: File | null = null;
@@ -18,12 +18,14 @@ export class UpdateProfilePhotoForm implements AfterViewInit {
   constructor(private profileService: ProfileService) {
 
   }
-
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     if (this.profileService.profileModel()?.profilePhotoId != null) {
-
+  
       this.imgSrc.set("https://localhost:7111/api/media/download/" + this.profileService.profileModel()?.profilePhotoId)
     }
+  }
+
+  ngAfterViewInit(): void {
   }
   protected previewImage(e: Event) {
     const input = e.target as HTMLInputElement;

@@ -5,22 +5,23 @@ import { MemberMatchView } from "../models/views/member-match-view";
 import { ToasterService } from "./general/toaster-service";
 import { ToastView } from "../models/views/toast-view";
 import { Severity } from "../models/enums/severity";
+import { PaginatedResult } from "../models/views/paginated-result";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MembersService {
-    private members = signal<Array<MemberModel> | null>(null);
-    public readonly _members = this.members.asReadonly();
+    private members = signal<PaginatedResult<MemberModel> | null>(null);
+    public _members = this.members.asReadonly();
     private URI: string = 'https://localhost:7111/api/members';
     private LikeUri: string = '/likeOrMatch/';
     constructor(private httpClient: HttpClient, private toasterService: ToasterService) { }
     public loadMembers(): void {
-        this.httpClient.get<Array<MemberModel>>(this.URI, { observe: 'response' }).subscribe({
-            next: (res: HttpResponse<Array<MemberModel>>) => this.onAcceptedCallback(res)
+        this.httpClient.get<PaginatedResult<MemberModel>>(this.URI, { observe: 'response' }).subscribe({
+            next: (res: HttpResponse<PaginatedResult<MemberModel>>) => this.onAcceptedCallback(res)
         })
     }
-    private onAcceptedCallback(response: HttpResponse<Array<MemberModel>>): void {
+    private onAcceptedCallback(response: HttpResponse<PaginatedResult<MemberModel>>): void {
         this.members.set(response.body);
     }
     public LikeMember(id: string) {

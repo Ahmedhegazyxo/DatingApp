@@ -1,7 +1,7 @@
 <div class="flex gap-4 flex-wrap justify-center">
     @if(_membersService._members() != null)
     {
-    @for(member of _membersService._members(); track member)
+    @for(member of _membersService._members()?.body; track member)
     {
     <app-member-card (onMemberCardClicked)="memberModelClicked($event)" [memberModel]="member"></app-member-card>
     }

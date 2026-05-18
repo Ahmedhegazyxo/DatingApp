@@ -1,0 +1,8 @@
+<label class="floating-label">
+    <span>{{label()}}</span>
+    <input type="tel" class="input {{inputClass()}}" placeholder="{{placeholder()}}" value="{{control.value}}"
+        [class.input-error]="control.invalid && control.touched"
+        [class.input-success]="!control.invalid && control.touched"
+        [formControl]="control" />
+       <app-validation-hints label="{{label()}}" [control]="control" />
+</label>

@@ -7,7 +7,7 @@ export class MemberModel {
     public birthdate: Date = new Date();
     public firstName: string = '';
     public lastName: string = '';
-    public gender: Gender = Gender.other;
+    public gender: Gender = Gender.male;
     public age : number = 0;
     public isLikedBefore : boolean = false;
     public profilePhotoId : string | null = null;

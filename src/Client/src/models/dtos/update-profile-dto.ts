@@ -7,5 +7,5 @@ export class UpdateProfileDto {
     public phoneNumber : string = '';
     public birthdate : string = ''
     public biography : string = '';
-    public gender : Gender = Gender.other;
+    public gender : Gender = Gender.male;
 }

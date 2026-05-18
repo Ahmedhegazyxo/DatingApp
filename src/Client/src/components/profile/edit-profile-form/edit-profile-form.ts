@@ -1,23 +1,34 @@
 import { AfterViewInit, Component, computed, EventEmitter, inject, Input, OnChanges, OnInit, Output, signal, SimpleChanges, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { ReactiveFormsModule, NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UpdateProfileDto } from '../../../models/dtos/update-profile-dto';
 import { ProfileService } from '../../../services/profile-service';
 import { DialogProvider } from '../../../services/general/dialog-provider';
 import { AuthenticationStateService } from '../../../services/authentication-state-service';
 import { ProfileModel } from '../../../models/views/profile-model';
-import { Avatar } from '../../../layout/avatar/avatar';
+import { JsonPipe, NgClass } from '@angular/common';
+import { TextInput } from "../../general/shared/text-input/text-input";
+import { TextAreaInput } from "../../general/shared/text-area-input/text-area-input";
+import { PhoneNumberInput } from "../../general/shared/phone-number-input/phone-number-input";
 
 @Component({
   selector: 'app-edit-profile-form',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, JsonPipe, TextInput, TextAreaInput, PhoneNumberInput],
   templateUrl: './edit-profile-form.html',
   styleUrl: './edit-profile-form.css',
 })
 export class EditProfileForm implements AfterViewInit, OnInit {
-  @ViewChild('editForm') protected editForm?: NgForm;
 
-  @Output()
-  afterValidSubmitAction = new EventEmitter<ProfileModel>();
+  protected editForm = new FormGroup({
+    email: new FormControl(),
+    username: new FormControl(),
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    phoneNumber: new FormControl(),
+    birthdate: new FormControl(),
+    biography: new FormControl(),
+    gender: new FormControl(),
+  });
+  @Output() afterValidSubmitAction = new EventEmitter<ProfileModel>();
   @Input() protected updateProfileDto: UpdateProfileDto = new UpdateProfileDto();
   @Input() protected profileModel: ProfileModel = new ProfileModel();
 
@@ -30,21 +41,27 @@ export class EditProfileForm implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.updateProfileDto.username = this.profileModel.username;
-    this.updateProfileDto.firstName = this.profileModel.firstName;
-    this.updateProfileDto.lastName = this.profileModel.lastName;
-    this.updateProfileDto.phoneNumber = this.profileModel.phoneNumber;
-    this.updateProfileDto.biography = this.profileModel.biography;
-    this.updateProfileDto.gender = this.profileModel.gender;
-    this.updateProfileDto.birthdate = this.profileModel.birthdate.slice(0,10);
+    this.editForm = new FormGroup({
+      email: new FormControl(this.profileModel.email, [Validators.required, Validators.email]),
+      username: new FormControl(this.profileModel.username, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
+      firstName: new FormControl(this.profileModel.firstName, Validators.required),
+      lastName: new FormControl(this.profileModel.lastName, Validators.required),
+      phoneNumber: new FormControl(this.profileModel.phoneNumber, [Validators.required, Validators.minLength(11), Validators.pattern(/^\+?\d+$/)]),
+      birthdate: new FormControl(this.profileModel.birthdate.slice(0, 10), Validators.required),
+      biography: new FormControl(this.profileModel.biography, Validators.maxLength(512)),
+      gender: new FormControl(this.profileModel.gender, Validators.required),
+    });
   }
   ngAfterViewInit(): void {
     this.editForm?.statusChanges?.subscribe({ next: (val) => this.isFormDirty.set(this.editForm!.dirty!) });
+
   }
 
-
   protected editProfileSubmitted(): void {
-    this.profileService.updateProfileBasicInfo(this.updateProfileDto).subscribe({
+    if (this.editForm.invalid)
+      return;
+
+    this.profileService.updateProfileBasicInfo(this.editForm.value as UpdateProfileDto).subscribe({
       next: (profileUpdated) => {
         this.profileService.profileModel.set(profileUpdated);
         var userModel = this.authStateService.userModel();

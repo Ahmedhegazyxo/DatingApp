@@ -7,7 +7,7 @@ export class ProfileModel {
     public phoneNumber : string = '';
     public birthdate : string = '';
     public age : number = 0;
-    public gender : Gender = Gender.other;
+    public gender : Gender = Gender.male
     public email : string = '';
     public biography : string = '';
     public profilePhotoId : string | null = null;

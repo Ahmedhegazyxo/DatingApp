@@ -14,11 +14,11 @@ public class MembersService : IMembersService
         _profileRepository = profileRepository;
     }
 
-    public async Task<List<MemberView>> GetMatchesAsync(PaginationFilter? paginationFilter = null, CancellationToken cancellationToken = default)
+    public async Task<PaginatedResult<MemberView>> GetMatchesAsync(PaginationFilter paginationFilter, CancellationToken cancellationToken = default)
     {
-
         Guid CurrentUserId = new Guid($"{_userClaimsService.ClaimsPrincipal!.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
-        return await _profileRepository.ReadAsResultAsNoTracking(paginationFilter,
+        return await _profileRepository.ReadAsResult(
+            paginationFilter,
          e => new MemberView
          {
              Birthdate = e.User!.Birthdate,
@@ -32,10 +32,10 @@ public class MembersService : IMembersService
         );
     }
 
-    public async Task<List<MemberView>> GetMembersAsync(PaginationFilter? paginationFilter = null, CancellationToken cancellationToken = default!)
+    public async Task<PaginatedResult<MemberView>> GetMembersAsync(PaginationFilter paginationFilter, CancellationToken cancellationToken = default!)
     {
         Guid CurrentUserId = new Guid($"{_userClaimsService.ClaimsPrincipal!.FindFirst(ClaimTypes.NameIdentifier)!.Value}");
-        return await _profileRepository.ReadAsResultAsNoTracking(paginationFilter,
+        return await _profileRepository.ReadAsResult(paginationFilter,
          e => new MemberView
          {
              Birthdate = e.User!.Birthdate,

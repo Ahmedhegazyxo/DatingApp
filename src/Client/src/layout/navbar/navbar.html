@@ -17,21 +17,22 @@
         <div class="sm:flex gap-4 hidden">
             @if(authenticationStateService.userModel() != null){
 
-            <a class="p-3 link no-underline" routerLink="/"
-                routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
+            <a class="p-2 link no-underline text-lg" routerLink="/"
+                routerLinkActive="bg-white rounded-full text-gray-700"
                 [routerLinkActiveOptions]="{exact : true}">Home</a>
-            <a class="p-3 link no-underline" routerLink="/members"
+            <a class="p-2 link no-underline text-lg" routerLink="/members"
+                routerLinkActive="bg-white rounded-full text-gray-700"
+                [routerLinkActiveOptions]="{exact : true}">Members</a>
+            <a class="p-2 link no-underline text-lg" routerLink="/matches"
                 routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
-                [routerLinkActiveOptions]="{exact : true}">Members</a> <a class="p-3 link no-underline"
-                routerLink="/matches" routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
                 [routerLinkActiveOptions]="{exact : true}">Matches</a>
             }
             @else
             {
-            <a class="p-3 link no-underline" routerLink="/login"
+            <a class="p-2 link no-underline text-lg" routerLink="/login"
                 routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
                 [routerLinkActiveOptions]="{exact : true}">Login</a>
-            <a class="p-3 link no-underline" routerLink="/register"
+            <a class="p-2 link no-underline text-lg" routerLink="/register"
                 routerLinkActive="bg-white rounded-l-full rounded-r-full text-gray-700"
                 [routerLinkActiveOptions]="{exact : true}">Register</a>
             }
@@ -39,9 +40,7 @@
         @if(authenticationStateService.userModel() != null)
         {
         <div class="flex items-center gap-4">
-            <button class="btn btn-ghost btn-circle transition-all duration-200 hover:bg-base-200 p-7
-            "
-                (click)="this.accessabilityService.toggleTheme()">
+            <button class="btn btn-ghost btn-circle transition-all duration-200 hover:bg-base-200 p-6" (click)="this.accessabilityService.toggleTheme()">
                 @if(this.accessabilityService.isDarkMode()){
                 <i class="fa-regular fa-lightbulb text-lg"></i>
                 }
@@ -50,7 +49,7 @@
                 }
             </button>
             <app-avatar [userAbbreviation]="usernameAbbreviation()"></app-avatar>
-            <button (click)="logout()" class="btn btn-error rounded-full text-white">
+            <button (click)="logout()" class="btn btn-error rounded-full text-white text-lg font-light">
                 <span class="md:block hidden">Logout</span>
                 <span><i class="fa-solid fa-right-from-bracket"></i></span>
             </button>
