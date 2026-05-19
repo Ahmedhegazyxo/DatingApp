@@ -13,7 +13,7 @@ export class MemberCard {
   constructor(private router: Router) {
 
   }
-  onMemberCardClicked = output<MemberModel>();
+  onMemberCardLiked = output<MemberModel>();
   @Input() public memberModel: MemberModel = new MemberModel();
 
   protected getCardClass(): string {
@@ -29,6 +29,6 @@ export class MemberCard {
       return "assets/logo/unknown.png"
   }
   protected likeUser() {
-    this.onMemberCardClicked.emit(this.memberModel);
+    this.onMemberCardLiked.emit(this.memberModel);
   }
 }

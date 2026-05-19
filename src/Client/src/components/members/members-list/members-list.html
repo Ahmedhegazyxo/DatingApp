@@ -1,12 +1,9 @@
-<div class="flex gap-4 flex-wrap justify-center">
-    @if(_membersService._members() != null)
-    {
-    @for(member of _membersService._members()?.body; track member)
-    {
-    <app-member-card (onMemberCardClicked)="memberModelClicked($event)" [memberModel]="member"></app-member-card>
-    }
-    }
-    @else{
-    <div class="skeleton"></div>
-    }
-</div>
+<app-paginated-list [fetchFn]="getMembers" [itemTemplate]="memberCardTemplate" #paginatedList></app-paginated-list>
+<ng-template #memberCardTemplate let-member>
+    <div >
+        @if(member != null){
+            <app-member-card [memberModel]="member" (onMemberCardLiked)="likeUser($event)"></app-member-card>
+        }
+    </div>
+
+</ng-template>

@@ -1,0 +1,6 @@
+<div class="join">
+    @for(pageNumber of pages(); track pageNumber){
+    <button class="join-item btn btn-md" [class.btn-active]="pageNumber == currentPageNumber()"
+        [disabled]="pageNumber == currentPageNumber()" (click)="onButtonClicked(pageNumber)">{{pageNumber}}</button>
+    }
+</div>

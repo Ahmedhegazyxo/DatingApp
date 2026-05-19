@@ -1,0 +1,16 @@
+<div class="flex justify-end">
+    Total Items Count : {{totalItemsCount()}}
+</div>
+<div class="flex my-2 gap-2 flex-wrap justify-center">
+    @for(item of paginatedResult().body; track item)
+    {
+    @if(item != null){
+
+    <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit : item}"></ng-container>
+    }
+    }
+</div>
+<div class="flex justify-center">
+    <app-paginator (pageNumberChanged)="pageNumberChanged($event)" (pageSizeChanged)="pageSizeChanged($event)"
+        [totalItemsCount]="totalItemsCount"></app-paginator>
+</div>

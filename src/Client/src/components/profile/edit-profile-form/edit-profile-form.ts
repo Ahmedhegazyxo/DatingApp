@@ -5,14 +5,13 @@ import { ProfileService } from '../../../services/profile-service';
 import { DialogProvider } from '../../../services/general/dialog-provider';
 import { AuthenticationStateService } from '../../../services/authentication-state-service';
 import { ProfileModel } from '../../../models/views/profile-model';
-import { JsonPipe, NgClass } from '@angular/common';
 import { TextInput } from "../../general/shared/text-input/text-input";
 import { TextAreaInput } from "../../general/shared/text-area-input/text-area-input";
 import { PhoneNumberInput } from "../../general/shared/phone-number-input/phone-number-input";
 
 @Component({
   selector: 'app-edit-profile-form',
-  imports: [ReactiveFormsModule, JsonPipe, TextInput, TextAreaInput, PhoneNumberInput],
+  imports: [ReactiveFormsModule, TextInput, TextAreaInput, PhoneNumberInput],
   templateUrl: './edit-profile-form.html',
   styleUrl: './edit-profile-form.css',
 })

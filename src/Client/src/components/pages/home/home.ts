@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationStateService } from '../../../services/authentication-state-service';
 import { MembersList } from '../../members/members-list/members-list';
+import { MembersService } from '../../../services/members-service';
 
 @Component({
   selector: 'app-home',

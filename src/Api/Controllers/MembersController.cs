@@ -13,12 +13,12 @@ public class MembersController : ControllerBase
         _matchingService = matchingService;
     }
     [HttpGet]
-    public async Task<PaginatedResult<MemberView>> GetMembers([FromQuery] PaginationFilter? paginationFilter)
+    public async Task<PaginatedResult<MemberView>> GetMembers([FromQuery] PaginationFilter paginationFilter)
     {
-        return await _membersService.GetMembersAsync(new PaginationFilter());
+        return await _membersService.GetMembersAsync(paginationFilter);
     }
     [HttpGet("matches")]
-    public async Task<PaginatedResult<MemberView>> GetMatches([FromQuery] PaginationFilter? paginationFilter)
+    public async Task<PaginatedResult<MemberView>> GetMatches([FromQuery] PaginationFilter paginationFilter)
     {
         return await _membersService.GetMatchesAsync(paginationFilter);
     }
