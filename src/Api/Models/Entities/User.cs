@@ -1,5 +1,4 @@
 using Api.Enums;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Api.Entities;
 
 public class User : BaseEntity<Guid>
@@ -36,7 +35,7 @@ public class User : BaseEntity<Guid>
     public void Update(string? username = null, DateTime? birthdate = null)
     {
         if (username != null)
-            this.Username = username;
+            this.Username = username.ToLower();
         if (birthdate != null)
             this.Birthdate = birthdate.Value;
     }

@@ -25,8 +25,8 @@ public class Profile : BaseEntity<Guid>
         if (gender == Gender.Female) preferredGender = Gender.Male;
         return new Profile
         {
-            FirstName = firstName.ToLower(),
-            LastName = lastName.ToLower(),
+            FirstName = firstName,
+            LastName = lastName,
             Gender = gender,
             ProfilePreference = ProfilePreference.Create(preferredGender)
         };
