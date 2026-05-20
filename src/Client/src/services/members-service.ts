@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from "@angular/common/http";
 import { MemberModel } from "../models/views/member-model";
 import { Injectable, signal } from "@angular/core";
 import { MemberMatchView } from "../models/views/member-match-view";
@@ -22,7 +22,10 @@ export class MembersService {
         })
     }
     public getMembers(paginationFilter: PaginationFilter): Observable<PaginatedResult<MemberModel>> {
-        return this.httpClient.get<PaginatedResult<MemberModel>>(this.URI + "?pageNumber=" + paginationFilter.pageNumber + "&pageSize=" + paginationFilter.pageSize)
+        let params = new HttpParams();
+        params = params.append('pageNumber', paginationFilter.pageNumber);
+        params = params.append('pageSize', paginationFilter.pageSize);
+        return this.httpClient.get<PaginatedResult<MemberModel>>(this.URI, { params });
     }
     private onAcceptedCallback(response: PaginatedResult<MemberModel>): void {
     }

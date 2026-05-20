@@ -12,19 +12,21 @@ import { NgTemplateOutlet } from '@angular/common';
   styleUrl: './paginated-list.css',
 })
 export class PaginatedList<T> implements AfterViewInit {
-  public pageSize = input<number>(50);
   @Input() fetchFn!: (filter: PaginationFilter) => Observable<PaginatedResult<T>>;
   @Input() itemTemplate!: TemplateRef<any>
   @Input() currentPageNumber = signal<number>(1);
-  @Input() currentPageSize = signal<number>(2);
+  @Input() currentPageSize = signal<number>(5);
   protected totalItemsCount = signal<number>(0);
+  protected pageSizeOptions = [5,10,25,50,100,500,1000]
   protected paginatedResult = signal<PaginatedResult<T>>(new PaginatedResult<T>());
   protected pageNumberChanged(pageNumber: number) {
     this.currentPageNumber.set(pageNumber);
     this.load();
   }
   protected pageSizeChanged(pageSize: number) {
+
     this.currentPageSize.set(pageSize);
+    this.currentPageNumber.set(1);
     this.load()
   }
   ngAfterViewInit(): void {

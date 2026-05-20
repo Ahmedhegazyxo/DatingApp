@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, input, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, input, signal, ViewChild, viewChild } from '@angular/core';
 import { MemberCard } from '../member-card/member-card';
 import { MembersService } from '../../../services/members-service';
 import { MemberModel } from '../../../models/views/member-model';

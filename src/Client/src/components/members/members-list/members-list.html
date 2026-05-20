@@ -1,9 +1,11 @@
-<app-paginated-list [fetchFn]="getMembers" [itemTemplate]="memberCardTemplate" #paginatedList></app-paginated-list>
-<ng-template #memberCardTemplate let-member>
-    <div >
-        @if(member != null){
+<div class="w-full">
+    <app-paginated-list [fetchFn]="getMembers" [itemTemplate]="memberCardTemplate" #paginatedList></app-paginated-list>
+    <ng-template #memberCardTemplate let-member>
+        <div>
+            @if(member != null){
             <app-member-card [memberModel]="member" (onMemberCardLiked)="likeUser($event)"></app-member-card>
-        }
-    </div>
+            }
+        </div>
 
-</ng-template>
+    </ng-template>
+</div>

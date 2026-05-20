@@ -1,16 +1,30 @@
-<div class="flex justify-end">
-    Total Items Count : {{totalItemsCount()}}
-</div>
-<div class="flex my-2 gap-2 flex-wrap justify-center">
-    @for(item of paginatedResult().body; track item)
-    {
-    @if(item != null){
+<div class="w-full">
 
-    <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit : item}"></ng-container>
-    }
-    }
-</div>
-<div class="flex justify-center">
-    <app-paginator (pageNumberChanged)="pageNumberChanged($event)" (pageSizeChanged)="pageSizeChanged($event)"
-        [totalItemsCount]="totalItemsCount"></app-paginator>
+    <div class="flex items-center justify-end gap-2 text-sm">
+        <span class="whitespace-nowrap">Previewing:</span>
+        <select class="select select-xs w-auto min-w-0" [value]="currentPageSize()"
+            (change)="pageSizeChanged(+$any($event.target).value)">
+            @for (size of pageSizeOptions; track size; let i = $index;) {
+            <option [value]="size" [disabled]="(pageSizeOptions[i-1] >= totalItemsCount())">{{ size }}</option>
+            }
+        </select>
+
+        <span class="text-xs text-gray-500 whitespace-nowrap">
+            of {{ totalItemsCount() }}
+        </span>
+    </div>
+
+    <div class="flex my-2 gap-2 flex-wrap justify-center">
+        @for(item of paginatedResult().body; track item)
+        {
+        @if(item != null){
+
+        <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit : item}"></ng-container>
+        }
+        }
+    </div>
+    <div class="flex justify-center">
+        <app-paginator (pageNumberChanged)="pageNumberChanged($event)" [pageSize]="currentPageSize" [currentPageNumber]="currentPageNumber"
+            (pageSizeChanged)="pageSizeChanged($event)" [totalItemsCount]="totalItemsCount"></app-paginator>
+    </div>
 </div>
