@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from "@angular/common/http";
 import { MemberModel } from "../models/views/member-model";
 import { Injectable, signal } from "@angular/core";
-import { MemberMatchView } from "../models/views/member-match-view";
+import { LikeResponseView } from "../models/views/like-response-view";
 import { ToasterService } from "./general/toaster-service";
 import { ToastView } from "../models/views/toast-view";
 import { Severity } from "../models/enums/severity";
@@ -29,7 +29,7 @@ export class MembersService {
     }
     private onAcceptedCallback(response: PaginatedResult<MemberModel>): void {
     }
-    public LikeMember(id: string): Observable<MemberMatchView> {
-        return this.httpClient.post<MemberMatchView>(this.URI + this.LikeUri + id, id);
+        public LikeMember(id: string): Observable<LikeResponseView> {
+        return this.httpClient.post<LikeResponseView>(this.URI + this.LikeUri + id, id);
     }
 }

@@ -9,6 +9,11 @@ import { ToasterProvider } from "../components/general/toaster-provider/toaster-
 import { AcessabilityService } from '../services/general/acessability-service';
 import { Dialogs } from "../components/general/dialogs/dialogs";
 import { Footer } from "../components/layout/footer/footer";
+import { SignalrService } from '../services/signalr-service';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { ToastView } from '../models/views/toast-view';
+import { ToasterService } from '../services/general/toaster-service';
+import { Severity } from '../models/enums/severity';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Navbar, LoadingStateProvider, ExceptionHandlerProvider, ToasterProvider, Dialogs, Footer],
@@ -16,10 +21,12 @@ import { Footer } from "../components/layout/footer/footer";
   styleUrl: './app.css'
 })
 export class App implements OnInit {
+  
   constructor(protected authenticationStateService: AuthenticationStateService,
     protected router: Router,
-    private acessabilityService: AcessabilityService) { }
-
+    protected toasterService: ToasterService,
+    private acessabilityService: AcessabilityService) {
+  }
   ngOnInit(): void {
     this.setUp();
   }

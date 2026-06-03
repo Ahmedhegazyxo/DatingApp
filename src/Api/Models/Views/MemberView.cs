@@ -1,6 +1,6 @@
 using Api.Enums;
 
-namespace Api.DTOs;
+namespace Api.Views;
 
 public class MemberView
 {
@@ -10,7 +10,9 @@ public class MemberView
     public string Username { get; set; } = string.Empty;
     public DateTime Birthdate { get; set; }
     public Gender Gender { get; set; }
-    public bool IsLikedBefore {get;set;}
+    public bool IsLiked {get;set;}
+    public bool IsMatched {get;set;}
+    public Guid? MatchId {get;set;}
     public string? ProfilePhotoId {get;set;}
     public double Age => Math.Round((DateTime.UtcNow - Birthdate).TotalDays / 365 );
 

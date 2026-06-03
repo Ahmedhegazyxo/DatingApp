@@ -15,6 +15,18 @@
     </div>
 
     <div class="flex my-2 gap-2 flex-wrap justify-center">
+        @if(paginatedResult().body.length == 0){
+        <div class="flex flex-col items-center gap-4">
+            <div>
+                <i class="fa-solid fa-dumpster text-7xl text-secondary"></i>
+            </div>
+            <div>
+                No items to show
+            </div>
+        </div>
+        }
+        @else {
+
         @for(item of paginatedResult().body; track item)
         {
         @if(item != null){
@@ -22,9 +34,11 @@
         <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit : item}"></ng-container>
         }
         }
+        }
     </div>
     <div class="flex justify-center">
-        <app-paginator (pageNumberChanged)="pageNumberChanged($event)" [pageSize]="currentPageSize" [currentPageNumber]="currentPageNumber"
-            (pageSizeChanged)="pageSizeChanged($event)" [totalItemsCount]="totalItemsCount"></app-paginator>
+        <app-paginator (pageNumberChanged)="pageNumberChanged($event)" [pageSize]="currentPageSize"
+            [currentPageNumber]="currentPageNumber" (pageSizeChanged)="pageSizeChanged($event)"
+            [totalItemsCount]="totalItemsCount"></app-paginator>
     </div>
 </div>

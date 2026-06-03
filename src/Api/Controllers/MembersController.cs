@@ -1,4 +1,5 @@
 using Api.Helpers;
+using Api.Views;
 namespace Api.Controllers;
 
 [ApiController]
@@ -7,10 +8,12 @@ public class MembersController : ControllerBase
 {
     private readonly IMembersService _membersService;
     private readonly IMemberMatchingService _matchingService;
-    public MembersController(IMembersService membersService, IMemberMatchingService matchingService)
+    private readonly IMatchService _matchService;
+    public MembersController(IMembersService membersService, IMemberMatchingService matchingService, IMatchService matchService)
     {
         _membersService = membersService;
         _matchingService = matchingService;
+        _matchService = matchService;
     }
     [HttpGet]
     public async Task<PaginatedResult<MemberView>> GetMembers([FromQuery] PaginationFilter paginationFilter)
@@ -20,7 +23,7 @@ public class MembersController : ControllerBase
     [HttpGet("matches")]
     public async Task<PaginatedResult<MemberView>> GetMatches([FromQuery] PaginationFilter paginationFilter)
     {
-        return await _membersService.GetMatchesAsync(paginationFilter);
+        return await _matchService.GetMatchesAsync(paginationFilter);
     }
     [HttpPost("likeOrMatch/{id}")]
     public async Task<IActionResult> LikeOrMatch([FromRoute] Guid id, CancellationToken cancellationToken)

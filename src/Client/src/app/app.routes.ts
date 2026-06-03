@@ -6,6 +6,7 @@ import { authGuard } from '../guards/auth-guard';
 import { LoginPage } from '../components/pages/login-page/login-page';
 import { RegisterPage } from '../components/pages/register-page/register-page';
 import { MatchesPage } from '../components/pages/matches-page/matches-page';
+import { MatchMessagesPage } from '../components/pages/chat/match-messages-page/match-messages-page';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,11 @@ export const routes: Routes = [
     {
         path : 'matches',
         component : MatchesPage,
+        canActivate : [authGuard]
+    },
+     {
+        path : 'matches/:id/messages',
+        component : MatchMessagesPage,
         canActivate : [authGuard]
     }
 ];

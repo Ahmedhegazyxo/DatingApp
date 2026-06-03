@@ -13,7 +13,11 @@ public interface IBaseRepository<TEntity, TId> where TEntity : BaseEntity<TId> w
     Task<List<TEntity>> ReadAsNoTracking(CancellationToken cancellationToken = default!, Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default);
     Task<PaginatedResult<TEntity>> Read(PaginationFilter paginationFilter, CancellationToken cancellationToken = default!, Expression<Func<TEntity, bool>>? predicate = null);
     Task<PaginatedResult<TEntity>> ReadAsNoTracking(PaginationFilter paginationFilter, CancellationToken cancellationToken = default!, Expression<Func<TEntity, bool>>? predicate = null, CancellationToken ct = default);
-    Task<PaginatedResult<TResult>> ReadAsResult<TResult>(PaginationFilter paginationFilter, Expression<Func<TEntity, TResult>> resultExpression, CancellationToken cancellationToken = default!, Expression<Func<TEntity, bool>>? predicate = null) where TResult : class;
+    Task<PaginatedResult<TResult>> ReadAsResult<TResult>(PaginationFilter paginationFilter,
+     Expression<Func<TEntity, TResult>> resultExpression,
+      CancellationToken cancellationToken = default!,
+       Expression<Func<TEntity, bool>>? predicate = null
+       ) where TResult : class;
 }
 public interface IBaseRepository<TEntity> where TEntity : BaseEntity
 {

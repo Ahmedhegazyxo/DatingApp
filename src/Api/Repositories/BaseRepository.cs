@@ -112,6 +112,7 @@ public class BaseRepository<TEntity, TId> : IBaseRepository<TEntity, TId> where 
         var query = _context.Set<TEntity>()
         .AsNoTracking()
         .Where(predicate)
+        .OrderByDescending(e=>e.CreatedDate)
         .Select(resultExpression);
         return new PaginatedResult<TResult>
         {

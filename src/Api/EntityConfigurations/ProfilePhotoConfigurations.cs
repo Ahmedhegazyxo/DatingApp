@@ -8,6 +8,7 @@ public class ProfilePhotoConfigurations : IEntityTypeConfiguration<ProfilePhoto>
     {
         builder.ToTable("ProfilePhotos");
         builder.HasIndex(e => e.AttachmentId).IsUnique();
+        builder.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
         builder.HasOne(e => e.Attachment).WithMany().HasForeignKey(e => e.AttachmentId).OnDelete(DeleteBehavior.Cascade);
     }
 }

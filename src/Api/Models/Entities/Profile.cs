@@ -40,7 +40,7 @@ public class Profile : BaseEntity<Guid>
     }
     public void Update(string? biography, string? firstName = default, string? lastName = default, Gender? gender = null, string? userName = null, DateTime? birthdate = null)
     {
-        if (biography is not null) Biography = biography;
+        if (biography is not null) Biography = biography.TrimStart().TrimEnd();
         if (firstName is not null) FirstName = firstName;
         if (lastName is not null) LastName = lastName;
         if (gender is not null) Gender = (Gender)gender;
@@ -56,5 +56,4 @@ public class Profile : BaseEntity<Guid>
     {
         MatchesSent.Add(ProfileMatch.Create(creatorId, receptorId));
     }
-
 }

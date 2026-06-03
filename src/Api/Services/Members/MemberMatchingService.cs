@@ -21,13 +21,13 @@ public class MemberMatchingService : IMemberMatchingService
         _context = context;
     }
 
-    public async Task<MatchView> LikeAndPossibleMatch(Guid receptorId, CancellationToken cancellationToken = default!)
+    public async Task<LikeResponseView> LikeAndPossibleMatch(Guid receptorId, CancellationToken cancellationToken = default!)
     {
         Guid currentUserId = Guid.Parse(
             _userClaimsService.ClaimsPrincipal!
                 .FindFirstValue(ClaimTypes.NameIdentifier)!
         );
-        bool isMatching = false;
+        bool isMatch = false;
         bool isLikedBefore = await _profileRepository.ExistsAsync(e => e.LikesSent.Any(e => e.ReceptorId == receptorId) && e.Id == currentUserId, cancellationToken);
         if (isLikedBefore)
             throw new DuplicateNameException("Member already was liked before");
@@ -37,11 +37,11 @@ public class MemberMatchingService : IMemberMatchingService
             if (profile!.LikesReceived.Any(e => e.CreatorId == receptorId))
             {
                 profile.AddMatch(currentUserId, receptorId);
-                isMatching = true;
+                isMatch = true;
             }
             profile.AddLike(currentUserId, receptorId);
             await _profileRepository.UpdateAsync(profile, cancellationToken);
-            return new MatchView { IsMatched = isMatching, UserId = receptorId };
+            return new LikeResponseView { IsMatched = isMatch, IsLiked = true, UserId = receptorId };
         }
     }
 }

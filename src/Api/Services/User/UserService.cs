@@ -33,6 +33,7 @@ public class UserService : IUserService
             TokenDTO tokenDTO = await _tokenService.IssueToken(user);
             return new UserView
             {
+                Id = user.Id,
                 FirstName = user.Profile!.FirstName,
                 LastName = user.Profile!.LastName,
                 Username = user.Username,

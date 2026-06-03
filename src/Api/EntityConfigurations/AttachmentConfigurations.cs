@@ -10,6 +10,7 @@ public class AttachmentConfigurations : IEntityTypeConfiguration<Attachment>
         builder.HasKey(e => e.Id);
         builder.Property(e => e.FileExtension).HasMaxLength(16);
         builder.Property(e => e.FileName).HasMaxLength(256);
+        builder.Property(e => e.CreatedDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
         
     }
 }

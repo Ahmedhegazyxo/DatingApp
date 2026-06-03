@@ -1,0 +1,10 @@
+<div class="w-full">
+    <app-paginated-list [fetchFn]="getMatches" [itemTemplate]="matchCardTemplate" #paginatedList></app-paginated-list>
+    <ng-template #matchCardTemplate let-match>
+        <div>
+            @if(match != null){
+            <app-member-card [memberModel]="match" ></app-member-card>
+            }
+        </div>
+    </ng-template>
+</div>

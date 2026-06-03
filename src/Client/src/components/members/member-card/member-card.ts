@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, Input, output, signal } from '@angular/core';
 import { MemberModel } from '../../../models/views/member-model';
 import { Gender } from '../../../models/enums/gender';
 import { Router } from '@angular/router';
@@ -14,11 +14,15 @@ export class MemberCard {
 
   }
   onMemberCardLiked = output<MemberModel>();
+  imageLoaded = signal(false);
   @Input() public memberModel: MemberModel = new MemberModel();
 
   protected getCardClass(): string {
+    if(this.memberModel.isMatched){
+      return "min-h-80 border-amber-500 card p-4 min-h-64 min-w-48 border-3";
+    }
     switch (this.memberModel.gender) {
-      case Gender.male: return "min-h-80 border-primary card  p-4  min-h-64 min-w-48 border-3   ";
+      case Gender.male: return "min-h-80 border-primary card  p-4  min-h-64 min-w-48 border-3";
       case Gender.female: return "min-h-80 border-secondary card p-4 min-h-64 min-w-48 border-3   ";
     }
   }
@@ -30,5 +34,12 @@ export class MemberCard {
   }
   protected likeUser() {
     this.onMemberCardLiked.emit(this.memberModel);
+  }
+  protected messageUser(matchId: string) {
+    this.router.navigate(['/matches/' + matchId + '/messages']);
+  }
+  onImageLoaded() {
+
+    this.imageLoaded.set(true);
   }
 }

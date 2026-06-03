@@ -46,17 +46,9 @@ public class TokenService : ITokenService
     public bool ValidateToken(string jwtToken)
     {
         string tokenKeyString = _config["JsonWebTokenKey"] ?? throw new Exception("Token key was not provided");
-        TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKeyString)),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-        JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
         SecurityToken securityToken;
+        ClaimsPrincipal userClaims = UserClaimsProvider.GetClaimsFromToken(jwtToken, tokenKeyString, out securityToken);
 
-        ClaimsPrincipal userClaims = jwtSecurityTokenHandler.ValidateToken(jwtToken, tokenValidationParameters, out securityToken);
         if (securityToken.ValidTo < DateTime.UtcNow)
         {
             throw new SecurityTokenExpiredException("Session Has Expired");

@@ -31,7 +31,9 @@ namespace Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("FileExtension")
                         .IsRequired()
@@ -55,6 +57,39 @@ namespace Api.Migrations
                     b.ToTable("Attachments", (string)null);
                 });
 
+            modelBuilder.Entity("Api.Entities.ChatMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<DateTime?>("LastModificationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageBody")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("MessageMatchId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageMatchId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("ChatMessages", (string)null);
+                });
+
             modelBuilder.Entity("Api.Entities.Profile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -65,7 +100,9 @@ namespace Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -93,7 +130,9 @@ namespace Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("TEXT");
@@ -120,7 +159,9 @@ namespace Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<Guid>("CreatorProfileId")
                         .HasColumnType("TEXT");
@@ -149,7 +190,9 @@ namespace Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTime?>("LastModificationDate")
                         .HasColumnType("TEXT");
@@ -205,7 +248,9 @@ namespace Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<bool>("Deactivated")
                         .HasColumnType("INTEGER");
@@ -247,6 +292,25 @@ namespace Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Api.Entities.ChatMessage", b =>
+                {
+                    b.HasOne("Api.Entities.ProfileMatch", "MessageMatch")
+                        .WithMany("MatchChatMessages")
+                        .HasForeignKey("MessageMatchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Api.Entities.Profile", "SenderProfile")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("MessageMatch");
+
+                    b.Navigation("SenderProfile");
                 });
 
             modelBuilder.Entity("Api.Entities.ProfileLike", b =>
@@ -347,6 +411,11 @@ namespace Api.Migrations
                     b.Navigation("ProfilePreference");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.Entities.ProfileMatch", b =>
+                {
+                    b.Navigation("MatchChatMessages");
                 });
 #pragma warning restore 612, 618
         }
