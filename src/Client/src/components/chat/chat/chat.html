@@ -20,7 +20,7 @@
             <button class="cursor-pointer chat-bubble chat-bubble-primary text-wrap">{{message.messageBody}}</button>
         </div>
         <div class="chat chat-end py-0">
-            <p class="text-xs text-gray-500 mt-1">{{message.sentAt}}</p>
+            <p class="text-xs text-gray-500 mt-1">{{ message.sentAt | date:'hh:mm a' : '+6'}}</p>
         </div>
         }
         @else {
@@ -28,7 +28,7 @@
             <button class="cursor-pointer chat-bubble chat-bubble-neutral text-wrap">{{message.messageBody}}</button>
         </div>
         <div class="chat chat-start py-0">
-            <p class="text-xs text-gray-500 mt-1">{{message.sentAt}}</p>
+            <p class="text-xs text-gray-500 mt-1">{{ message.sentAt | date:'hh:mm a' : '+6' }}</p>
         </div>
         }
         }
@@ -36,7 +36,8 @@
     </div>
     <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
         <div class="flex flex-1 gap-2 p-4">
-            <input type="text" formControlName="messageBody" placeholder="Type a message..." class="input input-bordered w-full" />
+            <input type="text" formControlName="messageBody" placeholder="Type a message..."
+                class="input input-bordered w-full" />
             <button class="btn btn-success" type="submit" [disabled]="this.formGroup.invalid"><i
                     class="fa-solid fa-paper-plane"></i></button>
         </div>

@@ -29,9 +29,9 @@ export class Home implements OnInit {
     }
   }
   loadMembers() {
-    // this.membersService.getMembers({ pageNumber: 1, pageSize: 3 }).subscribe({
-    //   next: (res) => this.members.set(res.body)
-    // })
+    this.membersService.getMembers({ pageNumber: 1, pageSize: 3 }).subscribe({
+      next: (res) => this.members.set(res.body)
+    })
   }
   likeMember(memberModel: MemberModel) {
     this.membersService.LikeMember(memberModel.id).subscribe({

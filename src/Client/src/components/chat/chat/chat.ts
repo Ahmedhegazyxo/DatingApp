@@ -6,10 +6,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { SignalrService } from '../../../services/signalr-service';
 import { ToastView } from '../../../models/views/toast-view';
 import { ToasterService } from '../../../services/general/toaster-service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule,DatePipe],
   templateUrl: './chat.html',
   styleUrl: './chat.css',
 })
