@@ -4,6 +4,7 @@ import { ProfileModel } from '../models/views/profile-model';
 import { UpdateProfileDto } from '../models/dtos/update-profile-dto';
 import { AuthenticationStateService } from './authentication-state-service';
 import { Observable, timeInterval } from 'rxjs';
+import { ProfileMetricsView } from '../models/views/profile-metrics-view';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,9 @@ export class ProfileService {
   public updateProfilePhoto(file: File) {
     const formData = new FormData()
     formData.append('formFile', file);
-    return this.httpClient.put<any>(this.baseUri + '/photo',formData)
+    return this.httpClient.put<any>(this.baseUri + '/photo', formData)
+  }
+  public getProfileMetrics() {
+    return this.httpClient.get<ProfileMetricsView>(this.baseUri + "/metrics");
   }
 }

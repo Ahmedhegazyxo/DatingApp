@@ -15,6 +15,11 @@ public class ProfileController : ControllerBase
         ProfileView userModel = await _profileService.GetMyProfile(cancellationToken);
         return Ok(userModel);
     }
+    [HttpGet("metrics")]
+    public async Task<IActionResult> GetProfileMetrics(CancellationToken cancellationToken)
+    {
+        return Ok(await _profileService.GetProfileMetrcis(cancellationToken));
+    }
     [HttpPut]
     public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDTO updateProfileDTO, CancellationToken cancellationToken)
     {

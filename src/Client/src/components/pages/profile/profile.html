@@ -60,35 +60,36 @@
     </div>
     <div class="card p-4 border bg-base-200 flex-1 flex flex-col">
       <h2 class="text-xl mb-2">Profile Stats</h2>
+      @if(this.profileMetrics() != null){
       <div class="stats shadow bg-base-300">
+        <div class="stat">
+          <div class="stat-figure text-success">
+            <i class="fa-solid fa-heart text-2xl"></i>
+          </div>
+          <div class="stat-title">Total Likes Sent</div>
+          <div class="stat-value">{{this.profileMetrics()!.totalLiksSent}}</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-figure text-warning">
+            <i class="fa-solid fa-heart text-2xl"></i>
+          </div>
+          <div class="stat-title">Total Likes Recieved</div>
+          <div class="stat-value">{{this.profileMetrics()!.totalLikesRecieved}}</div>
+        </div>
+
         <div class="stat">
           <div class="stat-figure text-success">
             <i class="fa-solid fa-user-plus text-2xl"></i>
           </div>
-          <div class="stat-title">Downloads</div>
-          <div class="stat-value">31K</div>
-          <div class="stat-desc">Jan 1st - Feb 1st</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-figure text-error">
-            <i class="fa-solid fa-user-plus text-2xl"></i>
-
-          </div>
-          <div class="stat-title">New Users</div>
-          <div class="stat-value">4,200</div>
-          <div class="stat-desc">↗︎ 400 (22%)</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-figure text-primary">
-            <i class="fa-solid fa-user-plus text-2xl"></i>
-          </div>
-          <div class="stat-title">New Registers</div>
-          <div class="stat-value">1,200</div>
-          <div class="stat-desc">↘︎ 90 (14%)</div>
+          <div class="stat-title">Total Matches</div>
+          <div class="stat-value">{{this.profileMetrics()!.totalMatches}}</div>
         </div>
       </div>
+      }
+      @else {
+        ... loading
+      }
       <div class="flex-1">
       </div>
     </div>

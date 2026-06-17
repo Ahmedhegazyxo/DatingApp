@@ -7,7 +7,8 @@ using Api.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.SignalR;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddCors(op => op.AddPolicy("DatingAppClient", url => url.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200")));
@@ -16,6 +17,7 @@ builder.Services.AddSignalR();
 builder.Services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<RegisterDtoValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateProfileValidator>();
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddDbContext<ApplicationDbContext>(op => op.UseSqlite("Data Source=datingApp.db").UseLazyLoadingProxies());
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
@@ -38,7 +40,7 @@ builder.Services.AddSwaggerGen(
     {
         Title = "Dating App",
         Version = "1.0.0",
-        Description = "API Endpoint for Dating App"
+        Description = "API Endpoint for Dating App",
     })
 );
 builder.Services.Configure<FileStorageConfiguration>(builder.Configuration.GetSection("FileStorageInfo"));

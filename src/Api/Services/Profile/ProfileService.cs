@@ -1,5 +1,7 @@
 using Api.Helpers;
 using Api.Repositories.Members;
+using Api.Views;
+using Microsoft.Build.Framework;
 using Microsoft.Extensions.Options;
 
 namespace Api.Services;
@@ -40,6 +42,18 @@ public class ProfileService : IProfileService
         };
     }
 
+    public async Task<ProfileMetricsView> GetProfileMetrcis(CancellationToken cancellationToken = default)
+    {
+        string idClaim = _claimsService.ClaimsPrincipal!.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        Profile? profile = await _profileRepository.ReadyByIdAsyncAsNoTracking(new Guid(idClaim), cancellationToken, true);
+        return new ProfileMetricsView
+        {
+            TotalLikesRecieved = profile!.LikesReceived.Count(),
+            TotalLiksSent = profile.LikesSent.Count(),
+            DateJoined = profile.CreatedDate,
+            TotalMatches = profile.MatchesReceived.Count() + profile.MatchesSent.Count()
+        };
+    }
 
     public async Task<ProfileView> UpdateProfile(UpdateProfileDTO updateProfileDTO, CancellationToken cancellationToken = default)
     {
@@ -67,7 +81,7 @@ public class ProfileService : IProfileService
         Profile? profile = await _profileRepository.ReadyByIdAsync(new Guid(idClaim), cancellationToken, true);
         FileMetaData fileMetaData = new FileMetaData
         {
-            FileName = profile?.ProfilePhoto == null ? Guid.NewGuid().ToString() : profile.ProfilePhoto.Attachment!.FileName, 
+            FileName = profile?.ProfilePhoto == null ? Guid.NewGuid().ToString() : profile.ProfilePhoto.Attachment!.FileName,
             OpenStream = () => formFile.OpenReadStream(),
             FileExtension = "." + formFile.FileName.Split('.').Last(),
             FileRootPath = Path.Combine(DateTime.UtcNow.Year.ToString(), DateTime.UtcNow.Month.ToString(), DateTime.UtcNow.Day.ToString())

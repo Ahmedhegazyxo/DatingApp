@@ -9,6 +9,7 @@ import { ToasterService } from '../../../services/general/toaster-service';
 import { ToastView } from '../../../models/views/toast-view';
 import { Severity } from '../../../models/enums/severity';
 import { UpdateProfilePhotoForm } from '../../profile/update-profile-photo-form/update-profile-photo-form';
+import { ProfileMetricsView } from '../../../models/views/profile-metrics-view';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,7 @@ import { UpdateProfilePhotoForm } from '../../profile/update-profile-photo-form/
 })
 export class Profile implements AfterViewInit {
   protected isLoading = signal<boolean>(false);
-
+  protected profileMetrics = signal<ProfileMetricsView | null>(null);
 
   protected age: any;
   constructor(public profileService: ProfileService,
@@ -28,6 +29,12 @@ export class Profile implements AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.profileService.getProfileInfo();
+    this.profileService.getProfileMetrics().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.profileMetrics.set(res);
+      }
+    });
   }
   protected editbuttonClicked() {
     var dialogInstance = this.dialogProviderService.open('Update Profile', () => { }, EditProfileForm, [
@@ -43,12 +50,12 @@ export class Profile implements AfterViewInit {
     var dialogInstance = this.dialogProviderService.open('Update Profile Photo', () => { }, UpdateProfilePhotoForm, [{
       contractType: ComponentContractType.Out,
       name: 'afterValidSubmitAction',
-      handler: (e) => { 
+      handler: (e) => {
         this.dialogProviderService.close(dialogInstance.id);
         this.profileService.getProfileInfo();
         window.location.reload();
 
-       }
+      }
     }]);
 
   }

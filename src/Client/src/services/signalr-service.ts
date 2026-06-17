@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { ToastView } from '../models/views/toast-view';
 import { Severity } from '../models/enums/severity';
 import { ToasterService } from './general/toaster-service';
@@ -26,7 +26,8 @@ export class SignalrService {
         headers: {
           Authorization: `Bearer ${accessToken}`
         },
-        accessTokenFactory: () => accessToken
+        accessTokenFactory: () => accessToken,
+        transport : HttpTransportType.ServerSentEvents
       }).withAutomaticReconnect().build();
   }
 }

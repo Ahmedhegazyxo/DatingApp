@@ -27,11 +27,8 @@ export class Chat {
     this.formGroup = this.fb.group({
       'messageBody': ['', [Validators.required]],
     });
-    console.log("Registered the handler");
-    console.log(this.signalRService.hubConnection);
     this.signalRService.connect(this.authenticationStateService.userModel()!.token);
     this.signalRService.hubConnection?.on("RecievedMessage", (notification) => {
-      console.log(notification);
       let toast = new ToastView(notification.title, notification.body, notification.severity, 5000);
       let chatMessageDto: ChatMessageDto = new ChatMessageDto();
       chatMessageDto.senderId = notification.senderId
